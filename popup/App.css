@@ -1,0 +1,56 @@
+* {
+	margin: 0; padding: 0;
+}
+
+html, body .popup-container{
+  width: 190px;
+}
+
+main {
+	height: 100%;
+}
+.refresh {
+	margin: 4px 4px 0px 0px;
+	float: right;
+}
+.refresh:hover {
+	cursor: pointer;
+}
+
+.summary-table {
+	padding: 23px 9px;
+}
+table > tr > td:last-of-type {
+	padding-left: 40px;
+  text-align: right;
+}
+
+table > tr:nth-child(odd) {
+	background-color: #c7e4fb;
+}
+fieldset:first-child {
+	margin-bottom: 10px;
+}
+section > li {
+	list-style-type: none;
+	display: block;
+	background-color: #93aab3;
+	width: 40%;
+	text-align: center;
+	padding: 5px;
+}
+section > li:hover {
+	color: white;
+	cursor: pointer;
+}
+section > li:first-child {
+	float: left;
+}
+section > li:last-child{
+	float: right;
+}
+.last-update {
+	font-size: xx-small;
+  float: right;
+  margin: -5px 8px 4px;
+}

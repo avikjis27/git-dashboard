@@ -1,0 +1,22 @@
+{
+  "manifest_version": 2,
+
+  "name": "Github PR Dashboard",
+  "description": "PR Dashboard to give the impression of current state of projects",
+  "version": "0.0.1",
+	"permissions": ["storage"],
+  "browser_action": {
+    "default_popup": "index.html",
+    "default_title": "PR Dashboard"
+  },
+  "icons": {
+    "16": "pr16.png",
+    "48": "pr16.png",
+    "128": "pr16.png"
+	},
+	"background": {
+		"scripts": ["background.js"],
+		"persistent": false
+	},
+	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}
