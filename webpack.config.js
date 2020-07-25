@@ -6,7 +6,8 @@ const path = require('path');
 module.exports = {
 	entry: {
     popup: [require.resolve('@babel/polyfill'), './src/popup/index.js'],
-    background: [require.resolve('@babel/polyfill'), './src/background/index.js']
+		background: [require.resolve('@babel/polyfill'), './src/background/index.js'],
+		option: [require.resolve('@babel/polyfill'), './src/option/index.js']
 },
 	output: {
 		path: path.resolve(__dirname, 'dist'),
@@ -23,8 +24,14 @@ module.exports = {
 	plugins: [
 		new CleanWebpackPlugin(),
 		new HtmlWebpackPlugin({
+			filename: 'popup.html',
 			template: 'src/popup/index.html',
 			chunks: ["popup"]
+		}),
+		new HtmlWebpackPlugin({
+			filename: 'option.html',
+			template: 'src/option/index.html',
+			chunks: ["option"]
 		}),
 		new CopyPlugin({
       patterns: [
