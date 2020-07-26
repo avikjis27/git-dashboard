@@ -1,31 +1,52 @@
 {
-  "manifest_version": 2,
-
-  "name": "Github PR Dashboard",
-  "description": "PR Dashboard to give the impression of current state of projects",
-  "version": "0.0.1",
-	"permissions": ["storage"],
-  "browser_action": {
-    "default_popup": "popup.html",
-    "default_title": "PR Dashboard"
+	"manifest_version": 2,
+	"name": "Github PR Dashboard",
+	"description": "PR Dashboard to give the impression of current state of projects",
+	"version": "0.0.1",
+	"permissions": [
+		"storage","tabs"
+	],
+	"commands": {
+		"follow-repo": {
+			"suggested_key": {
+				"default": "Alt+Shift+F",
+				"windows": "Alt+Shift+F",
+				"mac": "Alt+Shift+F"
+			},
+			"description": "Follow a git repo"
+		},
+		"unfollow-repo": {
+			"suggested_key": {
+				"default": "Alt+Shift+U",
+				"windows": "Alt+Shift+U",
+				"mac": "Alt+Shift+U"
+			},
+			"description": "Unfollow a git repo"
+		}
+	},
+	"browser_action": {
+		"default_popup": "popup.html",
+		"default_title": "PR Dashboard"
 	},
 	"web_accessible_resources": [
-	 "fontawesome.min.css",
-	 "fontawesome-webfont.ttf",
-	 "fontawesome-webfont.woff"
- ],
-  "icons": {
-    "16": "pr16.png",
-    "48": "pr16.png",
-    "128": "pr16.png"
+		"fontawesome.min.css",
+		"fontawesome-webfont.ttf",
+		"fontawesome-webfont.woff"
+	],
+	"icons": {
+		"16": "pr16.png",
+		"48": "pr16.png",
+		"128": "pr16.png"
 	},
 	"background": {
-		"scripts": ["background.js"],
+		"scripts": [
+			"background.js"
+		],
 		"persistent": false
 	},
 	"options_ui": {
-    "page": "option.html",
-    "chrome_style": true
-},
+		"page": "option.html",
+		"chrome_style": true
+	},
 	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }
