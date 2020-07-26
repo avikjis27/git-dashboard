@@ -11,6 +11,10 @@ class App extends Component {
 		};
 	}
 
+	openOptionPage() {
+		chrome.runtime.openOptionsPage();
+	}
+
 	componentDidMount() {
 		chrome.runtime.sendMessage({ type: 'popupInit' }, (response) => {
 			if (response) {
@@ -33,6 +37,7 @@ class App extends Component {
 						<fieldset>
 							<legend><b>Team's dashboard:</b></legend>
 							<table>
+								<tbody>
 								<tr>
 									<td>Total Open</td>
 									<td>{this.state.openPRCount}</td>
@@ -41,11 +46,13 @@ class App extends Component {
 									<td>Asked your review</td>
 									<td>6</td>
 								</tr>
+								</tbody>
 							</table>
 						</fieldset>
 						<fieldset>
 							<legend><b>Personal dashboard:</b></legend>
 							<table>
+								<tbody>
 								<tr>
 									<td>Open</td>
 									<td>12</td>
@@ -58,12 +65,13 @@ class App extends Component {
 									<td>Change Requested</td>
 									<td>6</td>
 								</tr>
+								</tbody>
 							</table>
 						</fieldset>
 					</section>
 					<span className="last-update">* Updated: 18th July, 2020 23.30</span>
 					<section>
-						<li>Settings</li>
+						<li onClick={this.openOptionPage}>Options</li>
 						<li>Details</li>
 					</section>
 				</main>

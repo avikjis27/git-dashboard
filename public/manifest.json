@@ -8,7 +8,12 @@
   "browser_action": {
     "default_popup": "popup.html",
     "default_title": "PR Dashboard"
-  },
+	},
+	"web_accessible_resources": [
+	 "fontawesome.min.css",
+	 "fontawesome-webfont.ttf",
+	 "fontawesome-webfont.woff"
+ ],
   "icons": {
     "16": "pr16.png",
     "48": "pr16.png",

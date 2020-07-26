@@ -1,8 +1,8 @@
 import { graphql } from "@octokit/graphql"
-
+const accessToken = localStorage.getItem('accesstoken') || ''
 const graphqlWithAuth = graphql.defaults({
 	headers: {
-		authorization: `token e6bb9153f1cda5d4ffc38d39121090681d9e9b3c`,
+		authorization: "token " + accessToken,
 	},
 });
 
