@@ -1,4 +1,5 @@
 import { getOpenPRCount } from './git-open-pr.js'
+import {followRepo, unfollowRepo} from './handler-repository'
 
 chrome.runtime.onInstalled.addListener(() => {
   console.log('onInstalled...');
@@ -6,10 +7,13 @@ chrome.runtime.onInstalled.addListener(() => {
 
 chrome.runtime.onMessage.addListener((msg, sender, response) => {
 	console.log("Got the message: "+ msg);
-	if (msg.type ===  'popupInit'){
-		getOpenPRCount().then (count => {
-			response(count)
-		});
+	switch(msg.type) {
+		case 'popupInit':
+			getOpenPRCount().then (count => {
+				response(count)
+			});
+			break;
+		default:
 	}
 	return true;
 });
@@ -42,13 +46,13 @@ function parse_url(url){
 
 function follow_repo(){
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-		console.log(parse_url(tabs[0].url));
+		followRepo(parse_url(tabs[0].url));
   });
 }
 
 function unfollow_repo(){
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-		console.log(parse_url(tabs[0].url));
+		unfollowRepo(parse_url(tabs[0].url));
   });
 }
 

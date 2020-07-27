@@ -21,9 +21,8 @@ class App extends Component {
 	componentDidMount() {
 		const accesstoken = localStorage.getItem('accesstoken') || '';
 		const repositories = JSON.parse(localStorage.getItem('repositories') || "[]");
-		console.log(repositories);
 		const queries = JSON.parse(localStorage.getItem('queries'));
-		console.log(queries	);
+		
 		this.setState({ "accesstoken": accesstoken });
 		this.setState({ "repositories": repositories });
 		this.setState({ "queries": queries });
