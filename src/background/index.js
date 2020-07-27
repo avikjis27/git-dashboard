@@ -13,6 +13,11 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
 				response(count)
 			});
 			break;
+		case 'optionInit':
+			getOpenPRCount().then (count => {
+				response(count)
+			});
+			break;
 		default:
 	}
 	return true;

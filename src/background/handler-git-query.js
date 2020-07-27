@@ -1,10 +1,14 @@
 import PouchDB from 'pouchdb';
 
+function getDB(){
+	return new PouchDB('queries', { auto_compaction: true });
+}
+
 export async function addNamedQuery(name, query) {
-	const db = new PouchDB('queries', { auto_compaction: true });
+	const db = getDB();
 	let existingDoc;
 	try {
-		existingDoc = await db.get(name);
+		existingDoc = await fetchQuery(name);
 		if (!existingDoc) {
 			await db.put({
 				_id: name,
@@ -23,14 +27,39 @@ export async function addNamedQuery(name, query) {
 }
 
 export async function deleteNamedQuery(name) {
-	const db = new PouchDB('queries', { auto_compaction: true });
+	const db = getDB();
 	let existingDoc;
 	try {
-		existingDoc = await db.get(name);
+		existingDoc = await fetchQuery(name);
 		if (existingDoc) {
 			await db.remove(existingDoc._id, existingDoc._rev);
 		}
 	} catch (err) {
 		console.log(err);
 	}
+}
+
+export async function fetchQuery(name) {
+	const db = getDB();
+	let existingDoc;
+	try {
+		existingDoc = await db.get(name);
+		return existingDoc;
+	} catch (err) {
+		console.log(err);
+	}
+	return null;
+}
+
+
+export async function fetchQueries() {
+	const db = getDB();
+	let existingDocs;
+	try {
+		existingDocs = await db.allDocs();
+		return existingDocs;
+	} catch (err) {
+		console.log(err);
+	}
+	return null;
 }

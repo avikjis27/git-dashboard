@@ -1,11 +1,14 @@
 import PouchDB from 'pouchdb';
 
+function getDB(){
+	return new PouchDB('access', { auto_compaction: true });
+}
 
 export async function addOrUpdateAccessToken(domain, token) {
-	const db = new PouchDB('access', { auto_compaction: true });
+	const db = getDB();
 	let existingDoc;
 	try {
-		existingDoc = await db.get(domain);
+		existingDoc = await fetchAccessToken(domain);
 		if (!existingDoc) {
 			await db.put({
 				_id: domain,
@@ -24,10 +27,10 @@ export async function addOrUpdateAccessToken(domain, token) {
 }
 
 export async function deleteAccessToken(domain) {
-	const db = new PouchDB('access', { auto_compaction: true });
+	const db = getDB();
 	let existingDoc;
 	try {
-		existingDoc = await db.get(domain);
+		existingDoc = await fetchAccessToken(domain);
 		if (existingDoc) {
 			await db.put({
 				_id: domain,
@@ -43,3 +46,29 @@ export async function deleteAccessToken(domain) {
 		console.log(err);
 	}
 }
+
+export async function fetchAccessToken(domain) {
+	const db = getDB();
+	let existingDoc;
+	try {
+		existingDoc = await db.get(domain);
+		return existingDoc;
+	} catch (err) {
+		console.log(err);
+	}
+	return null;
+}
+
+export async function fetchAccessTokens() {
+	const db = getDB();
+	let existingDocs;
+	try {
+		existingDocs = await db.allDocs();
+		return existingDocs;
+	} catch (err) {
+		console.log(err);
+	}
+	return null;
+}
+
+
