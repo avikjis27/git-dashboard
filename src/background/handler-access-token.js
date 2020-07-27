@@ -1,17 +1,45 @@
-import { PouchDB } from PouchDB;
+import PouchDB from 'pouchdb';
 
 
-async function storeAccessToken(key, token){
-	var db = new PouchDB('access');
-	const resp = await db.put({
-		_id: key,
-		token: token
-	});
-	return resp;
+export async function addOrUpdateAccessToken(domain, token) {
+	const db = new PouchDB('access', { auto_compaction: true });
+	let existingDoc;
+	try {
+		existingDoc = await db.get(domain);
+		if (!existingDoc) {
+			await db.put({
+				_id: domain,
+				token: token
+			});
+		} else {
+			await db.put({
+				_id: existingDoc._id,
+				_rev: existingDoc._rev,
+				token: token
+			})
+		}
+	} catch (err) {
+		console.log(err);
+	}
 }
 
-async function fetchAccessToken(key, token){
-	var db = new PouchDB('access');
-	const resp = await db.get(key);
-	return resp;
+export async function deleteAccessToken(domain) {
+	const db = new PouchDB('access', { auto_compaction: true });
+	let existingDoc;
+	try {
+		existingDoc = await db.get(domain);
+		if (existingDoc) {
+			await db.put({
+				_id: domain,
+				token: token
+			});
+		} else {
+			await db.remove({
+				_id: existingDoc._id,
+				_rev: existingDoc._rev
+			})
+		}
+	} catch (err) {
+		console.log(err);
+	}
 }
