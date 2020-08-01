@@ -1,6 +1,6 @@
 import { getOpenPRCount } from './git-open-pr.js'
 import {followRepo, unfollowRepo, fetchRepos} from './handler-repository'
-import {fetchAccessTokens} from './handler-access-token'
+import {fetchAccessToken, fetchAccessTokens} from './handler-access-token'
 import {fetchQueries} from './handler-git-query'
 
 chrome.runtime.onInstalled.addListener(() => {
@@ -16,7 +16,10 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
 			});
 			break;
 		case 'optionInit':
-			response(initOptionPage())
+			initOptionPage().then (data => {
+				console.log("In background", data);
+				response(data);
+			})
 			break;
 		default:
 	}
@@ -34,14 +37,45 @@ chrome.commands.onCommand.addListener(function(command) {
   }
 });
 
-function initOptionPage(){
-	const data = {
-		tokens: fetchAccessTokens(),
-		repos: fetchRepos(),
-		queries: fetchQueries()
+async function initOptionPage(){
+	let repos = await fetchRepos();
+	let tokens = await fetchAccessTokens();
+	const tokenData = {};
+	tokens.rows.forEach(row => {
+		tokenData[row.id] = row.doc.token;
+	});
+	const data = [];
+	repos.rows.forEach(row => {
+		const domain = row.doc.details.domain;
+		const owner = row.doc.details.owner;
+		const repo = row.doc.details.repo;
+		data.push([domain, owner, repo]);
+	})
+	const response = {
+		"repos": organizeData(data),
+		"tokens": tokens,
+		"queries": {}
 	};
-	return data;
+	return response;
+}
 
+function organizeData(data){
+	console.log("organizeData", data);
+	const jsonData = {};
+	data.forEach(item => {
+		if (item[0] in jsonData){
+			if (item[1] in jsonData[item[0]]){
+				jsonData[item[0]][item[1]].push(item[2]);
+			}else{
+				jsonData[item[0]][item[1]] = [item[2]];
+			}
+		}else{
+			jsonData[item[0]] = {};
+			jsonData[item[0]][item[1]] = [item[2]];
+		}
+	})
+	console.log('Unflat', jsonData);
+	return jsonData;
 }
 
 function parse_url(url){

@@ -63,7 +63,7 @@ export async function fetchAccessTokens() {
 	const db = getDB();
 	let existingDocs;
 	try {
-		existingDocs = await db.allDocs();
+		existingDocs = await db.allDocs({include_docs: true});
 		return existingDocs;
 	} catch (err) {
 		console.log(err);
