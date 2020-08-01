@@ -1,5 +1,7 @@
 import { getOpenPRCount } from './git-open-pr.js'
-import {followRepo, unfollowRepo} from './handler-repository'
+import {followRepo, unfollowRepo, fetchRepos} from './handler-repository'
+import {fetchAccessTokens} from './handler-access-token'
+import {fetchQueries} from './handler-git-query'
 
 chrome.runtime.onInstalled.addListener(() => {
   console.log('onInstalled...');
@@ -14,9 +16,7 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
 			});
 			break;
 		case 'optionInit':
-			getOpenPRCount().then (count => {
-				response(count)
-			});
+			response(initOptionPage())
 			break;
 		default:
 	}
@@ -33,6 +33,16 @@ chrome.commands.onCommand.addListener(function(command) {
     	break;
   }
 });
+
+function initOptionPage(){
+	const data = {
+		tokens: fetchAccessTokens(),
+		repos: fetchRepos(),
+		queries: fetchQueries()
+	};
+	return data;
+
+}
 
 function parse_url(url){
 	let parser = document.createElement('a');

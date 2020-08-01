@@ -4,6 +4,10 @@ const CopyPlugin = require('copy-webpack-plugin');
 const path = require('path');
 
 module.exports = {
+	devServer: {
+    historyApiFallback: true,
+    port: 9000
+  },
 	entry: {
     popup: [require.resolve('@babel/polyfill'), './src/popup/index.js'],
 		background: [require.resolve('@babel/polyfill'), './src/background/index.js'],

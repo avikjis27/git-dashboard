@@ -3,6 +3,7 @@
 	"name": "Github PR Dashboard",
 	"description": "PR Dashboard to give the impression of current state of projects",
 	"version": "0.0.1",
+	"options_page": "option.html",
 	"permissions": [
 		"storage","tabs"
 	],
@@ -43,10 +44,6 @@
 			"background.js"
 		],
 		"persistent": false
-	},
-	"options_ui": {
-		"page": "option.html",
-		"chrome_style": true
 	},
 	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }
