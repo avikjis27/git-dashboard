@@ -6,9 +6,9 @@ class Owners extends Component {
 
 	createOwnerPanel(domain){
 		const panel = [];
-		console.log('From owner', domain);
 		Object.keys(domain).forEach(owner => {
 			panel.push(
+				<div key={owner}>
 				<Collapsible trigger={owner}
 				triggerClassName="owner-style-open"
 				triggerOpenedClassName="owner-style-closed"
@@ -16,6 +16,7 @@ class Owners extends Component {
 				contentInnerClassName="owner-style-content-inner">
 				<Repos repos={domain[owner]}/>
 			</Collapsible>
+			</div>
 			);
 		});
 		return panel;

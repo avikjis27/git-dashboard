@@ -7,7 +7,7 @@ class Repos extends Component {
 		const panel = [];
 		repos.forEach(repo => {
 			panel.push(
-				<div className="repo-details">
+				<div className="repo-details" key={repo}>
 					<fieldset>
 						<legend>{repo}</legend>
 						<Queries/>

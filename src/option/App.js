@@ -20,7 +20,6 @@ class App extends Component {
 	componentDidMount() {
 		chrome.runtime.sendMessage({ type: 'optionInit' }, (response) => {
 			if (response) {
-				console.log(response);
 				this.setState({ accesstoken: response.tokens });
 				this.setState({ repositories: response.repos });
 				this.setState({ queries: response.queries });
@@ -32,18 +31,19 @@ class App extends Component {
 	createRepoPanel(){
 		const elements = this.state.repositories;
 		const panel = [];
-		console.log("from option page", this.state);
 		Object.keys(elements).forEach(domain => {
 			panel.push(
+				<div key={domain}>
 				<Collapsible trigger={domain}
 					triggerClassName="domain-style-open"
 					triggerOpenedClassName="domain-style-closed"
 					contentOuterClassName="domain-style-content-outer"
 					contentInnerClassName="domain-style-content-inner">
 						<div className="access-token"><FontAwesomeIcon icon={faQuestionCircle} /> Git Access Token
-									<input type="text" className="access-token-input" value=""/></div>
+									<input type="text" className="access-token-input" defaultValue=""/></div>
 						<Owners domain={elements[domain]}/>
 				</Collapsible>
+				</div>
 			);
 		});
 		return panel;
@@ -58,11 +58,7 @@ class App extends Component {
 			);
 			}
 			else {
-					return(
-						<div>
-					 		{this.createRepoPanel()}
-						</div>
-					);
+					return this.createRepoPanel();
 			}
 	}
 }
