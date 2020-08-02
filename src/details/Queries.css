@@ -1,0 +1,6 @@
+th {
+	margin-bottom: 7px;
+}
+th:first-child{
+	float: left;
+}

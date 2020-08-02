@@ -1,0 +1,71 @@
+.access-label{
+  float: left;
+  margin-right:20px;
+}
+.repo-label{
+  margin-right:20px;
+  margin-top:10px;
+  margin-bottom:10px;
+}
+.input{
+  float: left
+}
+.flash{
+  margin-left:20px;
+}
+i{
+  margin-right:5px;
+  margin-left:5px;
+}
+fieldset{
+  margin: 10px;
+}
+.checkbox{
+  float: right;
+  margin-right: 200px;
+}
+
+.Collapsible {
+	margin-bottom: 2px;
+}
+
+
+.domain-style-open, .domain-style-closed {
+	display: block;
+	height: 2em;
+	padding: 13px 0px 0px 20px;
+	background-color: peachpuff;
+}
+.owner-style-open, .owner-style-closed{
+	display: block;
+	height: 30px;
+	padding: 10px 0px 0px 20px;
+	background-color: peachpuff;
+}
+.is-closed {
+	background-color: #ff9800;
+	color: white;
+}
+.domain-style-content-outer {
+	background-color: aliceblue;
+}
+.domain-style-content-inner {
+	padding: 5px 5px 5px 30px;
+}
+
+.owner-style-content-outer {
+	background-color: #e0eef5;
+	padding: 0px 0px 0px 30px;
+}
+.owner-style-content-inner {
+	padding: 0px 0px 0px 10px;
+}
+.repo-details{
+	margin-top: 10px
+}
+.access-token {
+	padding: 25px;
+}
+.access-token-input {
+	margin-left: 25px;
+}

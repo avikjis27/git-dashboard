@@ -14,6 +14,9 @@ class App extends Component {
 	openOptionPage() {
 		chrome.runtime.openOptionsPage();
 	}
+	openDetailsPage() {
+		chrome.tabs.create({url: chrome.extension.getURL('details.html')});
+	}
 
 	componentDidMount() {
 		chrome.runtime.sendMessage({ type: 'popupInit' }, (response) => {
@@ -71,7 +74,7 @@ class App extends Component {
 					<span className="last-update">* Updated: 18th July, 2020 23.30</span>
 					<section>
 						<li onClick={this.openOptionPage}>Options</li>
-						<li>Details</li>
+						<li onClick={this.openDetailsPage}>Details</li>
 					</section>
 				</main>
 			</div>
