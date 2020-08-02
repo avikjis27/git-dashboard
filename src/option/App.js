@@ -25,7 +25,6 @@ class App extends Component {
 				this.setState({ queries: response.queries });
 			}
 		});
-
 	}
 	updateAccessToken(event, domain, persist) {
 		let objCopy = Object.assign({}, this.state.accesstoken)

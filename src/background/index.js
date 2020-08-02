@@ -1,7 +1,7 @@
 import { getOpenPRCount } from './git-open-pr.js'
 import {followRepo, unfollowRepo, fetchRepos} from './handler-repository'
 import {fetchAccessToken, fetchAccessTokens, addOrUpdateAccessToken} from './handler-access-token'
-import {fetchQueries} from './handler-git-query'
+import {fetchQuery,addNamedQuery} from './handler-git-query'
 
 chrome.runtime.onInstalled.addListener(() => {
   console.log('onInstalled...');
@@ -16,15 +16,24 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
 			break;
 		case 'optionInit':
 			initOptionPage().then (data => {
-				console.log("In background", data);
 				response(data);
 			})
 			break;
 		case 'acessTokenUpdated':
-			console.log( msg.domain, msg.token);
 			addOrUpdateAccessToken( msg.domain, msg.token).then (() => {
 				response();
 			})
+			break;
+		case 'fetchQueries':
+			fetchQuery( msg.key ).then ((data) => {
+				response(data);
+			})
+			break;
+		case 'saveQueries':
+			addNamedQuery( msg.key, msg.object).then (() => {
+				response();
+			})
+			break;
 		default:
 	}
 	return true;

@@ -3,11 +3,35 @@ import './Queries.css';
 
 class Queries extends Component {
 
-	componentDidMount() {
-		chrome.runtime.sendMessage({ type: 'fetchQueries' }, (response) => {
-			if (response) {
-				//TODO
+	constructor(props) {
+		super(props);
+		this.state = {
+			queries: {
+				OPEN_PR: false,
+				OPEN_ISSUES: false,
+				OWN_PR_STATUS: true
 			}
+		};
+	}
+
+	componentDidMount() {
+		const key = this.createKey();
+		chrome.runtime.sendMessage({ type: 'fetchQueries', key:key }, (response) => {
+			if (response) {
+				this.setState({ queries: response.query });
+			}
+		});
+	}
+	createKey(){
+		return this.props.domain+"/"+this.props.owner+"/"+this.props.repo;
+	}
+
+	handleChange(event, queryKey){
+		let objCopy = Object.assign({}, this.state.queries);
+		objCopy[queryKey] = event.target.checked;
+		this.setState({queries: objCopy});
+		const key = this.createKey();
+		chrome.runtime.sendMessage({ type: 'saveQueries', key: key, object: objCopy }, () => {
 		});
 	}
 
@@ -24,15 +48,15 @@ class Queries extends Component {
 				<tbody>
 					<tr>
 						<td>All Open PR(s)</td>
-						<td><input type="checkbox"></input></td>
+						<td><input type="checkbox" checked={this.state.queries["OPEN_PR"]} onChange={e => this.handleChange(e, "OPEN_PR")}></input></td>
 					</tr>
 					<tr>
 						<td>All Open Issues(s)</td>
-						<td><input type="checkbox"></input></td>
+						<td><input type="checkbox" checked={this.state.queries["OPEN_ISSUES"]} onChange={e => this.handleChange(e, "OPEN_ISSUES")}></input></td>
 					</tr>
 					<tr>
 						<td>Status of your PR(s)</td>
-						<td><input type="checkbox"></input></td>
+						<td><input type="checkbox" checked={this.state.queries["OWN_PR_STATUS"]} onChange={e => this.handleChange(e, "OWN_PR_STATUS")}></input></td>
 					</tr>
 				</tbody>
 			</table>

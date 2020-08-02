@@ -18,7 +18,6 @@ class App extends Component {
 	componentDidMount() {
 		chrome.runtime.sendMessage({ type: 'popupInit' }, (response) => {
 			if (response) {
-				console.log(response);
 				this.setState({
 					openPRCount: response
 				});
