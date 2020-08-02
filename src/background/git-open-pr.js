@@ -1,10 +1,4 @@
 import { graphql } from "@octokit/graphql"
-const accessToken = localStorage.getItem('accesstoken') || ''
-const graphqlWithAuth = graphql.defaults({
-	headers: {
-		authorization: "token " + accessToken,
-	},
-});
 
 const QUERY_ALL_OPEN_PR_COUNT = `query totalOpenPR($owner: String!, $repo: String!){
 	repository(owner: $owner, name: $repo) {
@@ -14,12 +8,18 @@ const QUERY_ALL_OPEN_PR_COUNT = `query totalOpenPR($owner: String!, $repo: Strin
 	}
 }`;
 
-export async function getOpenPRCount() {
+export async function getOpenPRCount(accessToken, owner, repo, ep="https://api.github.com") {
+	const graphqlWithAuth = graphql.defaults({
+		baseUrl: ep,
+		headers: {
+			authorization: "token " + accessToken,
+		},
+	});
 	let openPRCount = 0;
 	try{
 		const response = await graphqlWithAuth(QUERY_ALL_OPEN_PR_COUNT, {
-			"owner": "hashicorp",
-			"repo": "terraform",
+			"owner": owner,
+			"repo": repo,
 		});
 		openPRCount = response.repository.pullRequests.totalCount;
 	}catch(error){

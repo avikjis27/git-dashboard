@@ -2,6 +2,7 @@ import { getOpenPRCount } from './git-open-pr.js'
 import {followRepo, unfollowRepo, fetchRepos} from './handler-repository'
 import {fetchAccessToken, fetchAccessTokens, addOrUpdateAccessToken} from './handler-access-token'
 import {fetchQuery,addNamedQuery} from './handler-git-query'
+import {aggregator} from './git-query-aggregator'
 
 chrome.runtime.onInstalled.addListener(() => {
   console.log('onInstalled...');
@@ -31,6 +32,11 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
 			break;
 		case 'saveQueries':
 			addNamedQuery( msg.key, msg.object).then (() => {
+				response();
+			})
+			break;
+		case 'queryGitRepo':
+			aggregator( msg.domain, msg.owner).then (() => {
 				response();
 			})
 			break;
