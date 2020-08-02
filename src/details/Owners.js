@@ -7,7 +7,6 @@ class Owners extends Component {
 	queryData(domain, owner){
 		console.log("Fetching data for", domain, owner);
 		chrome.runtime.sendMessage({ type: 'queryGitRepo', domain: domain, owner: owner }, (response) => {
-			alert('Token updated');
 		});	
 	}
 

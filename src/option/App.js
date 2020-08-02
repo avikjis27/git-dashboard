@@ -58,7 +58,7 @@ class App extends Component {
 					contentOuterClassName="domain-style-content-outer"
 					contentInnerClassName="domain-style-content-inner">
 						<div className="access-token"><FontAwesomeIcon icon={faQuestionCircle} /> Git Access Token
-									<input type="text" className="access-token-input" value={this.fetchAccessToken(domain)}
+									<input type="text" className="access-token-input" size="45" value={this.fetchAccessToken(domain)}
 									onChange={(e) => this.updateAccessToken( e, domain, false)}
 									onBlur={(e) => this.updateAccessToken( e, domain, true)}/></div>
 						<Owners domain={domain} owners={elements[domain]}/>
