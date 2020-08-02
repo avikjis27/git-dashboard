@@ -2,6 +2,16 @@ import React, { Component } from 'react';
 import './Queries.css';
 
 class Queries extends Component {
+
+	componentDidMount() {
+		chrome.runtime.sendMessage({ type: 'fetchQueries' }, (response) => {
+			if (response) {
+				//TODO
+			}
+		});
+	}
+
+
 	render() {
 		return (
 			<table>

@@ -62,7 +62,7 @@ class App extends Component {
 									<input type="text" className="access-token-input" value={this.fetchAccessToken(domain)}
 									onChange={(e) => this.updateAccessToken( e, domain, false)}
 									onBlur={(e) => this.updateAccessToken( e, domain, true)}/></div>
-						<Owners domain={elements[domain]}/>
+						<Owners domain={domain} owners={elements[domain]}/>
 				</Collapsible>
 				</div>
 			);

@@ -10,7 +10,7 @@ class Repos extends Component {
 				<div className="repo-details" key={repo}>
 					<fieldset>
 						<legend>{repo}</legend>
-						<Queries/>
+						<Queries repo={repo} owner={this.props.owner} domain={this.props.domain}/>
 					</fieldset>
 				</div>
 			);
@@ -21,6 +21,7 @@ class Repos extends Component {
 	render() {
 		return (
 			this.createRepoPanel(this.props.repos)
+			
 		)
 	}
 }

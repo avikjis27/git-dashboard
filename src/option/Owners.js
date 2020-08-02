@@ -4,9 +4,9 @@ import Collapsible from 'react-collapsible';
 
 class Owners extends Component {
 
-	createOwnerPanel(domain){
+	createOwnerPanel(owners){
 		const panel = [];
-		Object.keys(domain).forEach(owner => {
+		Object.keys(owners).forEach(owner => {
 			panel.push(
 				<div key={owner}>
 				<Collapsible trigger={owner}
@@ -14,7 +14,7 @@ class Owners extends Component {
 				triggerOpenedClassName="owner-style-closed"
 				contentOuterClassName="owner-style-content-outer"
 				contentInnerClassName="owner-style-content-inner">
-				<Repos repos={domain[owner]}/>
+				<Repos domain={this.props.domain} owner={owner} repos={owners[owner]}/>
 			</Collapsible>
 			</div>
 			);
@@ -24,7 +24,7 @@ class Owners extends Component {
 
 	render() {
 		return (
-			this.createOwnerPanel(this.props.domain)
+			this.createOwnerPanel(this.props.owners)
 		)
 	}
 }
