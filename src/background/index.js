@@ -1,6 +1,6 @@
 import { getOpenPRCount } from './git-open-pr.js'
 import {followRepo, unfollowRepo, fetchRepos} from './handler-repository'
-import {fetchAccessToken, fetchAccessTokens} from './handler-access-token'
+import {fetchAccessToken, fetchAccessTokens, addOrUpdateAccessToken} from './handler-access-token'
 import {fetchQueries} from './handler-git-query'
 
 chrome.runtime.onInstalled.addListener(() => {
@@ -8,7 +8,6 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 chrome.runtime.onMessage.addListener((msg, sender, response) => {
-	console.log("Got the message: "+ msg);
 	switch(msg.type) {
 		case 'popupInit':
 			getOpenPRCount().then (count => {
@@ -21,6 +20,11 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
 				response(data);
 			})
 			break;
+		case 'acessTokenUpdated':
+			console.log( msg.domain, msg.token);
+			addOrUpdateAccessToken( msg.domain, msg.token).then (() => {
+				response();
+			})
 		default:
 	}
 	return true;
@@ -53,14 +57,13 @@ async function initOptionPage(){
 	})
 	const response = {
 		"repos": organizeData(data),
-		"tokens": tokens,
+		"tokens": tokenData,
 		"queries": {}
 	};
 	return response;
 }
 
 function organizeData(data){
-	console.log("organizeData", data);
 	const jsonData = {};
 	data.forEach(item => {
 		if (item[0] in jsonData){
@@ -74,7 +77,6 @@ function organizeData(data){
 			jsonData[item[0]][item[1]] = [item[2]];
 		}
 	})
-	console.log('Unflat', jsonData);
 	return jsonData;
 }
 

@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Owners from './Owners';
-import { faQuestionCircle, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Collapsible from 'react-collapsible';
 
@@ -27,6 +27,25 @@ class App extends Component {
 		});
 
 	}
+	updateAccessToken(event, domain, persist) {
+		let objCopy = Object.assign({}, this.state.accesstoken)
+		objCopy[domain] = event.target.value
+		this.setState({accesstoken: objCopy});
+		if (persist){
+			chrome.runtime.sendMessage({ type: 'acessTokenUpdated', token: event.target.value, domain: domain }, () => {
+				alert('Token updated');
+			});	
+		}
+		
+	}
+	fetchAccessToken(domain) {
+		if(this.state.accesstoken !== null){
+			if (domain in this.state.accesstoken){
+				return this.state.accesstoken[domain];
+			}
+		}
+		return "";
+	}
 
 	createRepoPanel(){
 		const elements = this.state.repositories;
@@ -40,7 +59,9 @@ class App extends Component {
 					contentOuterClassName="domain-style-content-outer"
 					contentInnerClassName="domain-style-content-inner">
 						<div className="access-token"><FontAwesomeIcon icon={faQuestionCircle} /> Git Access Token
-									<input type="text" className="access-token-input" defaultValue=""/></div>
+									<input type="text" className="access-token-input" value={this.fetchAccessToken(domain)}
+									onChange={(e) => this.updateAccessToken( e, domain, false)}
+									onBlur={(e) => this.updateAccessToken( e, domain, true)}/></div>
 						<Owners domain={elements[domain]}/>
 				</Collapsible>
 				</div>
