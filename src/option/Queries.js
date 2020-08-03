@@ -6,17 +6,13 @@ class Queries extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			queries: {
-				OPEN_PR: false,
-				OPEN_ISSUES: false,
-				OWN_PR_STATUS: true
-			}
+			queries: {}
 		};
 	}
 
 	componentDidMount() {
 		const key = this.createKey();
-		chrome.runtime.sendMessage({ type: 'fetchQueries', key:key }, (response) => {
+		chrome.runtime.sendMessage({ type: 'fetchAvailableReports', key:key }, (response) => {
 			if (response) {
 				this.setState({ queries: response.query });
 			}

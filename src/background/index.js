@@ -1,7 +1,7 @@
 import { getOpenPRCount } from './git-open-pr.js'
 import {followRepo, unfollowRepo, fetchRepos} from './handler-repository'
 import {fetchAccessToken, fetchAccessTokens, addOrUpdateAccessToken} from './handler-access-token'
-import {fetchQuery,addNamedQuery} from './handler-git-query'
+import {fetchQuery, addNamedQuery, deleteNamedQuery} from './handler-git-query'
 import {aggregator} from './git-query-aggregator'
 
 chrome.runtime.onInstalled.addListener(() => {
@@ -25,7 +25,7 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
 				response();
 			})
 			break;
-		case 'fetchQueries':
+		case 'fetchAvailableReports':
 			fetchQuery( msg.key ).then ((data) => {
 				response(data);
 			})
@@ -36,7 +36,7 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
 			})
 			break;
 		case 'queryGitRepo':
-			aggregator( msg.domain, msg.owner, msg.repo).then ((data) => {
+			aggregator( msg.domain, msg.owner, msg.repo, msg.reportNames).then ((data) => {
 				response(data);
 			})
 			break;
@@ -112,13 +112,21 @@ function parse_url(url){
 
 function follow_repo(){
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-		followRepo(parse_url(tabs[0].url));
+		const parsedURL = parse_url(tabs[0].url)
+		followRepo(parsedURL);
+		addNamedQuery( parsedURL.domain+"/"+parsedURL.owner+"/"+parsedURL.repo, {
+			OPEN_PR: true,
+			OPEN_ISSUES: false,
+			OWN_PR_STATUS: false
+		})
   });
 }
 
 function unfollow_repo(){
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-		unfollowRepo(parse_url(tabs[0].url));
+		const parsedURL = parse_url(tabs[0].url)
+		unfollowRepo(parsedURL);
+		deleteNamedQuery( parsedURL.domain+"/"+parsedURL.owner+"/"+parsedURL.repo);
   });
 }
 
