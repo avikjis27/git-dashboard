@@ -4,11 +4,7 @@ import Collapsible from 'react-collapsible';
 
 class Owners extends Component {
 
-	queryData(domain, owner){
-		console.log("Fetching data for", domain, owner);
-		chrome.runtime.sendMessage({ type: 'queryGitRepo', domain: domain, owner: owner }, (response) => {
-		});	
-	}
+	
 
 	createOwnerPanel(owners){
 		const panel = [];
@@ -19,8 +15,7 @@ class Owners extends Component {
 				triggerClassName="owner-style-open"
 				triggerOpenedClassName="owner-style-closed"
 				contentOuterClassName="owner-style-content-outer"
-				contentInnerClassName="owner-style-content-inner"
-				onOpening={() => this.queryData(this.props.domain, owner)}>
+				contentInnerClassName="owner-style-content-inner">
 				<Repos domain={this.props.domain} owner={owner} repos={owners[owner]}/>
 			</Collapsible>
 			</div>

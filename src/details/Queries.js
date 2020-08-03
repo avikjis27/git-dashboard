@@ -15,7 +15,15 @@ class Queries extends Component {
 	}
 
 	componentDidMount() {
+		this.queryData(this.props.domain, this.props.owner, this.props.repo)
 		
+	}
+
+	queryData(domain, owner, repo){
+		chrome.runtime.sendMessage({ type: 'queryGitRepo', domain: domain, owner: owner, repo: repo }, (response) => {
+			console.log('queryData', response);
+			this.setState({ queries: response });
+		});	
 	}
 	
 

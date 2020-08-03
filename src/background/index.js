@@ -36,8 +36,8 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
 			})
 			break;
 		case 'queryGitRepo':
-			aggregator( msg.domain, msg.owner).then (() => {
-				response();
+			aggregator( msg.domain, msg.owner, msg.repo).then ((data) => {
+				response(data);
 			})
 			break;
 		default:
