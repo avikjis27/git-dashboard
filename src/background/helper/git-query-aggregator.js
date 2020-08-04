@@ -1,6 +1,5 @@
-import {fetchQuery} from './handler-git-query'
-import {fetchAccessToken} from './handler-access-token'
-import {getOpenPRCount} from './git-open-pr'
+import {fetchAccessToken} from '../data-access/access-token'
+import {getOpenPRCount} from '../graph-ql/git-open-pr'
 
 export async function aggregator(reqDomain, reqOwner, repo, reportNames ) {
 	const output = {};	

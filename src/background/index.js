@@ -1,8 +1,8 @@
-import { getOpenPRCount } from './git-open-pr.js'
-import {followRepo, unfollowRepo, fetchRepos} from './handler-repository'
-import {fetchAccessToken, fetchAccessTokens, addOrUpdateAccessToken} from './handler-access-token'
-import {fetchQuery, addNamedQuery, deleteNamedQuery} from './handler-git-query'
-import {aggregator} from './git-query-aggregator'
+import { getOpenPRCount } from './graph-ql/git-open-pr'
+import {followRepo, unfollowRepo, fetchRepos} from './data-access/git-repository'
+import {fetchAccessTokens, addOrUpdateAccessToken} from './data-access/access-token'
+import {fetchQuery, addNamedQuery, deleteNamedQuery} from './data-access/named-report'
+import {aggregator} from './helper/git-query-aggregator'
 
 chrome.runtime.onInstalled.addListener(() => {
   console.log('onInstalled...');
