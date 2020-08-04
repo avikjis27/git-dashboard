@@ -69,3 +69,12 @@ fieldset{
 .access-token-input {
 	margin-left: 25px;
 }
+
+.repo-controls {
+	float: right;
+	padding: 4px;
+	background-color: #ff9800;
+	margin-right: 3px;
+	color: white;
+	cursor: pointer;
+}

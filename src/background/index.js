@@ -126,7 +126,7 @@ function unfollow_repo(){
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 		const parsedURL = parse_url(tabs[0].url)
 		unfollowRepo(parsedURL);
-		deleteNamedQuery( parsedURL.domain+"/"+parsedURL.owner+"/"+parsedURL.repo);
+		deleteNamedQuery( parsedURL.domain+"/"+parsedURL.owner+"/"+parsedURL.repo );
   });
 }
 

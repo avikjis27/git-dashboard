@@ -22,7 +22,7 @@ export async function addOrUpdateAccessToken(domain, token) {
 			})
 		}
 	} catch (err) {
-		console.log(err);
+		console.error(err);
 	}
 }
 
@@ -43,7 +43,7 @@ export async function deleteAccessToken(domain) {
 			})
 		}
 	} catch (err) {
-		console.log(err);
+		console.error(err);
 	}
 }
 
@@ -54,7 +54,7 @@ export async function fetchAccessToken(domain) {
 		existingDoc = await db.get(domain);
 		return existingDoc;
 	} catch (err) {
-		console.log(err);
+		console.error(err);
 	}
 	return null;
 }
@@ -66,7 +66,7 @@ export async function fetchAccessTokens() {
 		existingDocs = await db.allDocs({include_docs: true});
 		return existingDocs;
 	} catch (err) {
-		console.log(err);
+		console.error(err);
 	}
 	return null;
 }

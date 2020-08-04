@@ -22,7 +22,7 @@ export async function addNamedQuery(name, query) {
 			})
 		}
 	} catch (err) {
-		console.log(err);
+		console.error(err);
 	}
 }
 
@@ -35,7 +35,7 @@ export async function deleteNamedQuery(name) {
 			await db.remove(existingDoc._id, existingDoc._rev);
 		}
 	} catch (err) {
-		console.log(err);
+		console.error(err);
 	}
 }
 
@@ -46,7 +46,7 @@ export async function fetchQuery(name) {
 		existingDoc = await db.get(name);
 		return existingDoc;
 	} catch (err) {
-		console.log(err);
+		console.error(err);
 	}
 	return null;
 }
@@ -59,7 +59,7 @@ export async function fetchQueries() {
 		existingDocs = await db.allDocs({include_docs: true});
 		return existingDocs;
 	} catch (err) {
-		console.log(err);
+		console.error(err);
 	}
 	return null;
 }

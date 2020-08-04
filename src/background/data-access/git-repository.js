@@ -9,6 +9,7 @@ function getDB(){
 export async function followRepo(repo) {
 	const db = getDB();
 	let obj_hash = hash(repo);
+	repo['favourite']=false;
 	let existingDoc;
 	try {
 		existingDoc = await fetchRepo(repo);
@@ -19,7 +20,7 @@ export async function followRepo(repo) {
 			});
 		}
 	} catch (err) {
-		console.log(err);
+		console.error(err);
 	}
 }
 
@@ -32,7 +33,7 @@ export async function unfollowRepo(repo) {
 			await db.remove(existingDoc._id, existingDoc._rev);
 		}
 	} catch (err) {
-		console.log(err);
+		console.error(err);
 	}
 }
 
@@ -44,7 +45,7 @@ export async function fetchRepo(repo) {
 		existingDoc = await db.get(obj_hash);
 		return existingDoc;
 	} catch (err) {
-		console.log(err);
+		console.error(err);
 	}
 	return null;
 }
@@ -56,7 +57,7 @@ export async function fetchRepos() {
 		existingDocs = await db.allDocs({include_docs: true});
 		return existingDocs;
 	} catch (err) {
-		console.log(err);
+		console.error(err);
 	}
 	return null;
 }

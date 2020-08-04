@@ -5,8 +5,12 @@ export async function aggregator(reqDomain, reqOwner, repo, reportNames ) {
 	const output = {};	
 	const accessResp = await fetchAccessToken(reqDomain);
 	if(reportNames['OPEN_PR']){
-		const count = await getOpenPRCount(accessResp.token, reqOwner, repo);
-		output['OPEN_PR'] = count;
+		if(accessResp.token){
+			const count = await getOpenPRCount(accessResp.token, reqOwner, repo);
+			output['OPEN_PR'] = count;
+		}else{
+			console.warn("Access token not set for the domain "+ reqDomain);
+		}
 	}
 	return output;
 }
