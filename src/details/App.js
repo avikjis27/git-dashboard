@@ -2,6 +2,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import Owners from './Owners';
+import Header from './Header'
+import Footer from './Footer'
 import Collapsible from 'react-collapsible';
 
 class App extends Component {
@@ -14,7 +16,7 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		chrome.runtime.sendMessage({ type: 'optionInit' }, (response) => {
+		chrome.runtime.sendMessage({ type: 'detailsInit' }, (response) => {
 			if (response) {
 				this.setState({ repositories: response.repos });
 			}
@@ -45,12 +47,19 @@ class App extends Component {
 		if (this.state.repositories === null) {
 			return (
 					<div>
-							<h1>Loading...</h1>
+						<img className="centered" src="loading.gif"></img>
 					</div>
 			);
 			}
 			else {
-					return this.createRepoPanel();
+				return(
+					<div>
+						<Header />
+					 		{ this.createRepoPanel() }
+						<Footer />
+					</div>
+					
+				);
 			}
 	}
 }

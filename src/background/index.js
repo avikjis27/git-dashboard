@@ -15,6 +15,7 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
 				response(count)
 			});
 			break;
+		case 'detailsInit':
 		case 'optionInit':
 			initOptionPage().then (data => {
 				response(data);

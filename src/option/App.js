@@ -2,6 +2,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import Owners from './Owners';
+import Header from './Header'
+import Footer from './Footer'
 import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Collapsible from 'react-collapsible';
@@ -72,14 +74,22 @@ class App extends Component {
 	render() {
 		if (this.state.repositories === null) {
 			return (
-					<div>
-							<h1>Loading...</h1>
-					</div>
+				<div>
+					<img className="centered" src="loading.gif"></img>
+				</div>
 			);
-			}
-			else {
-					return this.createRepoPanel();
-			}
+		}
+		else {
+			return(
+				<div>
+					<Header />
+						 { this.createRepoPanel() }
+					<Footer />
+				</div>
+				
+			);
+		}
+
 	}
 }
 
