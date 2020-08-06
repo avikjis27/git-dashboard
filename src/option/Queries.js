@@ -27,7 +27,7 @@ class Queries extends Component {
 		});
 	}
 	createKey(){
-		return this.props.domain+"/"+this.props.owner+"/"+this.props.repo;
+		return this.props.domain+"/"+this.props.owner+"/"+this.props.repo.name;
 	}
 
 	handleChange(event, queryKey){

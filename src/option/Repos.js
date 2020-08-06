@@ -18,7 +18,7 @@ class Repos extends Component {
 				<div className="repo-details" key={repo.name}>
 					<fieldset>
 						<legend>{repo.name}</legend>
-						<Queries repo={repo.name} owner={this.props.owner} domain={this.props.domain}/>
+						<Queries repo={repo} owner={this.props.owner} domain={this.props.domain}/>
 					</fieldset>
 				</div>
 			);
