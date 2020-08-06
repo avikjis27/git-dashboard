@@ -89,9 +89,9 @@ function organizeData(data){
 	data.forEach(item => {
 		if (item[0] in jsonData){
 			if (item[1] in jsonData[item[0]]){
-				jsonData[item[0]][item[1]].push(item[2]);
+				jsonData[item[0]][item[1]].push({name:item[2], favourite:item[3]});
 			}else{
-				jsonData[item[0]][item[1]] = [item[2]];
+				jsonData[item[0]][item[1]] = [{name:item[2], favourite:item[3]}];
 			}
 		}else{
 			jsonData[item[0]] = {};
