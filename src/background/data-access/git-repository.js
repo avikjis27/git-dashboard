@@ -5,12 +5,41 @@ function getDB(){
 	return new PouchDB('repositories', { auto_compaction: true });
 }
 
+function createHash(repo){
+	let obj_hash = hash(repo, { excludeKeys: function(key) {
+    if ( key === 'favourite') {
+      return true;
+		}
+    return false;
+	}},{respectType: false});
+	return obj_hash;
+}
+
+
+export async function toggleFavouriteRepo(repo) {
+	const db = getDB();
+	try {
+		let existingDoc = await fetchRepo(repo);
+		repo['favourite'] = !existingDoc.details.favourite
+		if (!existingDoc) {
+			console.error("Repository not present",repo)
+		} else {
+			await db.put({
+				_id: existingDoc._id,
+				_rev: existingDoc._rev,
+				details: repo
+			})
+		}
+	} catch (err) {
+		console.error(err);
+	}
+}
 
 export async function followRepo(repo) {
 	const db = getDB();
-	let obj_hash = hash(repo);
-	repo['favourite']=false;
+	let obj_hash = createHash(repo);
 	let existingDoc;
+	repo['favourite']=false;
 	try {
 		existingDoc = await fetchRepo(repo);
 		if (!existingDoc) {
@@ -39,10 +68,9 @@ export async function unfollowRepo(repo) {
 
 export async function fetchRepo(repo) {
 	const db = getDB();
-	let obj_hash = hash(repo);
-	let existingDoc;
+	let obj_hash = createHash(repo);
 	try {
-		existingDoc = await db.get(obj_hash);
+		let existingDoc = await db.get(obj_hash);
 		return existingDoc;
 	} catch (err) {
 		console.error(err);

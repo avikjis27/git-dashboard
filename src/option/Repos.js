@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
 import Queries from './Queries';
-import { faHeart, faHeartBroken, faLink, faStar } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class Repos extends Component {
+
+	constructor(props) {
+		super(props);
+		this.state = {
+			repos: props.repos
+		};
+	}
+	
 
 	createRepoPanel(repos){
 		const panel = [];
 		repos.forEach(repo => {
 			panel.push(
-				<div className="repo-details" key={repo}>
+				<div className="repo-details" key={repo.name}>
 					<fieldset>
-						<legend>{repo}</legend>
-						<div>
-							<div className="repo-controls"><FontAwesomeIcon icon={faStar} /><span> Favourite</span></div>
-							<div className="repo-controls"><FontAwesomeIcon icon={faHeartBroken} /><span> Unfollow</span></div>
-							<div className="repo-controls"><FontAwesomeIcon icon={faLink} /><span> Go to Repo</span></div>
-						</div>
-						<Queries repo={repo} owner={this.props.owner} domain={this.props.domain}/>
+						<legend>{repo.name}</legend>
+						<Queries repo={repo.name} owner={this.props.owner} domain={this.props.domain}/>
 					</fieldset>
 				</div>
 			);
@@ -27,7 +28,7 @@ class Repos extends Component {
 
 	render() {
 		return (
-			this.createRepoPanel(this.props.repos)
+			this.createRepoPanel(this.state.repos)
 			
 		)
 	}

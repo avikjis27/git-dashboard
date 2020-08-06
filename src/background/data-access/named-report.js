@@ -39,11 +39,11 @@ export async function deleteNamedQuery(name) {
 	}
 }
 
-export async function fetchQuery(name) {
+export async function fetchQuery(reportKey) {
 	const db = getDB();
 	let existingDoc;
 	try {
-		existingDoc = await db.get(name);
+		existingDoc = await db.get(reportKey);
 		return existingDoc;
 	} catch (err) {
 		console.error(err);

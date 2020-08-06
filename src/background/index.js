@@ -1,5 +1,5 @@
 import { getOpenPRCount } from './graph-ql/git-open-pr'
-import {followRepo, unfollowRepo, fetchRepos} from './data-access/git-repository'
+import {followRepo, unfollowRepo, fetchRepos, toggleFavouriteRepo} from './data-access/git-repository'
 import {fetchAccessTokens, addOrUpdateAccessToken} from './data-access/access-token'
 import {fetchQuery, addNamedQuery, deleteNamedQuery} from './data-access/named-report'
 import {aggregator} from './helper/git-query-aggregator'
@@ -26,7 +26,7 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
 			})
 			break;
 		case 'fetchAvailableReports':
-			fetchQuery( msg.key ).then ((data) => {
+			fetchQuery( msg.reportkey ).then ((data) => {
 				response(data);
 			})
 			break;
@@ -38,6 +38,11 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
 		case 'queryGitRepo':
 			aggregator( msg.domain, msg.owner, msg.repo, msg.reportNames).then ((data) => {
 				response(data);
+			})
+			break;
+		case 'toggleFavourite':
+			toggleFavouriteRepo( msg.repo ).then (() => {
+				response();
 			})
 			break;
 		default:
@@ -68,7 +73,8 @@ async function initOptionPage(){
 		const domain = row.doc.details.domain;
 		const owner = row.doc.details.owner;
 		const repo = row.doc.details.repo;
-		data.push([domain, owner, repo]);
+		const isfavourite = row.doc.details.favourite;
+		data.push([domain, owner, repo, isfavourite]);
 	})
 	const response = {
 		"repos": organizeData(data),
@@ -89,7 +95,7 @@ function organizeData(data){
 			}
 		}else{
 			jsonData[item[0]] = {};
-			jsonData[item[0]][item[1]] = [item[2]];
+			jsonData[item[0]][item[1]] = [{name:item[2], favourite:item[3]}];
 		}
 	})
 	return jsonData;
@@ -107,7 +113,7 @@ function parse_url(url){
 		domain: host,
 		owner: owner,
 		repo: repo
-	}
+	};
 }
 
 function follow_repo(){

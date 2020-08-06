@@ -1,18 +1,26 @@
 import React, { Component } from 'react';
 import './Queries.css';
+import { faHeart, faHeartBroken, faLink, faSadTear, faStar, faThumbsDown, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class Queries extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			queries: {}
+			queries: {
+				OPEN_PR: false,
+				OPEN_ISSUES: false,
+				OWN_PR_STATUS: false
+
+			},
+			repo: this.props.repo
 		};
 	}
 
 	componentDidMount() {
 		const key = this.createKey();
-		chrome.runtime.sendMessage({ type: 'fetchAvailableReports', key:key }, (response) => {
+		chrome.runtime.sendMessage({ type: 'fetchAvailableReports', reportkey:key }, (response) => {
 			if (response) {
 				this.setState({ queries: response.query });
 			}
@@ -31,9 +39,39 @@ class Queries extends Component {
 		});
 	}
 
+	toggleFavouriteRepo(repo){
+		let currentState = Object.assign({}, repo);
+		currentState.favourite = !currentState.favourite;
+		chrome.runtime.sendMessage({ type: 'toggleFavourite', repo: {
+			domain:this.props.domain,
+			owner:this.props.owner,
+			repo:repo.name
+		} });
+		this.setState({repo: currentState});
+	}
+
+	renderFavButton(repo){
+		if (repo.favourite){
+			return (
+			<div className="repo-controls" onClick={() => this.toggleFavouriteRepo(repo)}>
+				<FontAwesomeIcon icon={faHeart} />
+			</div>
+		)
+		} else{
+			return (
+			<div className="repo-controls" onClick={() => this.toggleFavouriteRepo(repo)}>
+				<FontAwesomeIcon icon={faHeartBroken} />
+			</div>
+		)
+		}
+	}
+
 
 	render() {
 		return (
+			<div>
+				{this.renderFavButton(this.state.repo)}
+			
 			<table>
 				<thead>
 					<tr>
@@ -56,6 +94,7 @@ class Queries extends Component {
 					</tr>
 				</tbody>
 			</table>
+			</div>
 		)
 	}
 }

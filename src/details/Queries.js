@@ -20,7 +20,7 @@ class Queries extends Component {
 
 	fetchRequiredReports(domain, owner, repo){
 		const reportKey = domain+"/"+owner+"/"+repo;
-		chrome.runtime.sendMessage({ type: 'fetchAvailableReports', key:reportKey }, (response) => {
+		chrome.runtime.sendMessage({ type: 'fetchAvailableReports', reportkey:reportKey }, (response) => {
 			if (response) {
 				chrome.runtime.sendMessage({ type: 'queryGitRepo', domain: domain, owner: owner, repo: repo, reportNames: response.query }, (response) => {
 					this.setState({ reports: response });
