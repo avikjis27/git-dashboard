@@ -9,7 +9,7 @@ class Queries extends Component {
 			reports: {
 				"OPEN_PR": '-',
 				"OPEN_ISSUES": '-',
-				"OWN_PR_STATUS": '-'
+				"OWN_PR_STATUS": {}
 			}
 		};
 	}
@@ -18,15 +18,36 @@ class Queries extends Component {
 		this.fetchRequiredReports(this.props.domain, this.props.owner, this.props.repo)
 	}
 
-	fetchRequiredReports(domain, owner, repo){
-		const reportKey = domain+"/"+owner+"/"+repo;
-		chrome.runtime.sendMessage({ type: 'fetchAvailableReports', reportkey:reportKey }, (response) => {
+	fetchRequiredReports(domain, owner, repo) {
+		const reportKey = domain + "/" + owner + "/" + repo;
+		chrome.runtime.sendMessage({ type: 'fetchAvailableReports', reportkey: reportKey }, (response) => {
 			if (response) {
+				console.log('fetchRequiredReports', response);
 				chrome.runtime.sendMessage({ type: 'queryGitRepo', domain: domain, owner: owner, repo: repo, reportNames: response.query }, (response) => {
 					this.setState({ reports: response });
-				});	
+				});
 			}
 		});
+	}
+
+
+	renderOwnPRStatus(ownPRStatus) {
+		if (ownPRStatus) {
+			const reviewRequired = ownPRStatus["REVIEW_REQUIRED"] ? ownPRStatus["REVIEW_REQUIRED"].length : '-';
+			const approved = ownPRStatus["APPROVED"] ? ownPRStatus["APPROVED"].length : '-';
+			const changesRequested = ownPRStatus["CHANGES_REQUESTED"] ? ownPRStatus["CHANGES_REQUESTED"].length : '-';
+			return (
+				<div>
+					<span>Review Required:</span> {reviewRequired} <span className="approved">Approved:</span> {approved} <span className="change-required">Change Requested:</span> {changesRequested}
+				</div>
+			)
+		} else {
+			return (
+				<div>
+					-
+				</div>
+			)
+		}
 	}
 
 	render() {
@@ -35,7 +56,7 @@ class Queries extends Component {
 				<thead>
 					<tr>
 						<th>Query Name</th>
-						<th>Count</th>
+						<th>Result</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -49,7 +70,7 @@ class Queries extends Component {
 					</tr>
 					<tr>
 						<td>Status of your PR(s)</td>
-						<td>{this.state.reports["OWN_PR_STATUS"]}</td>
+						<td>{this.renderOwnPRStatus(this.state.reports["OWN_PR_STATUS"])}</td>
 					</tr>
 				</tbody>
 			</table>

@@ -4,3 +4,11 @@ th {
 th:first-child{
 	float: left;
 }
+.approved{
+	color: green;
+  font-weight: 900;
+}
+.change-required{
+	color: red;
+  font-weight: 900;
+}
