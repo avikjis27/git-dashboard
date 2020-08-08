@@ -10,12 +10,18 @@ class Queries extends Component {
 				"OPEN_PR": '-',
 				"OPEN_ISSUES": '-',
 				"OWN_PR_STATUS": {}
-			}
+			},
+			openPRLink: "",
+			openIssuesLink: "",
+			yourOpenPRLink: "",
 		};
 	}
 
 	componentDidMount() {
-		this.fetchRequiredReports(this.props.domain, this.props.owner, this.props.repo)
+		this.fetchRequiredReports(this.props.domain, this.props.owner, this.props.repo);
+		this.setState({openPRLink: "https://"+this.props.domain+"/"+this.props.owner+"/"+this.props.repo+"/"+"pulls"});
+		this.setState({openIssuesLink: "https://"+this.props.domain+"/"+this.props.owner+"/"+this.props.repo+"/"+"issues"});
+		this.setState({yourOpenPRLink: "https://"+this.props.domain+"/"+this.props.owner+"/"+this.props.repo+"/"+"pulls"+"/"+"@me"});
 	}
 
 	fetchRequiredReports(domain, owner, repo) {
@@ -61,15 +67,15 @@ class Queries extends Component {
 				</thead>
 				<tbody>
 					<tr>
-						<td>All Open PR(s)</td>
+						<td><a href={this.state.openPRLink}>All Open PR(s)</a></td>
 						<td>{this.state.reports["OPEN_PR"]}</td>
 					</tr>
 					<tr>
-						<td>All Open Issues(s)</td>
+						<td><a href={this.state.openIssuesLink}>All Open Issues(s)</a></td>
 						<td>{this.state.reports["OPEN_ISSUES"]}</td>
 					</tr>
 					<tr>
-						<td>Status of your PR(s)</td>
+						<td><a href={this.state.yourOpenPRLink}>Status of your PR(s)</a></td>
 						<td>{this.renderOwnPRStatus(this.state.reports["OWN_PR_STATUS"])}</td>
 					</tr>
 				</tbody>
