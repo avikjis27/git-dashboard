@@ -1,0 +1,15 @@
+.severe{
+	background-color: red;
+	color: white;
+	margin-bottom: 2px;
+	padding: 3px;
+}
+.high{
+	background-color: pink;
+	color: black;
+	margin-bottom: 2px;
+	padding: 3px;
+}
+.notification-panel{
+	margin-bottom: 8px;
+}

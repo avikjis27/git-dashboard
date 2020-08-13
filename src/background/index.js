@@ -2,17 +2,21 @@ import { getOpenPRCount } from './graph-ql/git-open-pr'
 import {followRepo, unfollowRepo, fetchRepos, toggleFavouriteRepo} from './data-access/git-repository'
 import {fetchAccessTokens, addOrUpdateAccessToken} from './data-access/access-token'
 import {fetchQuery, addNamedQuery, deleteNamedQuery} from './data-access/named-report'
+import { fetchIndexedNotifications, addNotifications } from './data-access/git-notifications'
 import {aggregator} from './helper/git-query-aggregator'
 
 chrome.runtime.onInstalled.addListener(() => {
-  console.log('onInstalled...');
+	console.log('onInstalled...');
+	addNotifications("Notification1", 1);
+	addNotifications("Notification2", 2);
+	addNotifications("Notification3", 1);
 });
 
 chrome.runtime.onMessage.addListener((msg, sender, response) => {
 	switch(msg.type) {
 		case 'popupInit':
-			getOpenPRCount().then (count => {
-				response(count)
+			fetchIndexedNotifications().then (data => {
+				response(data)
 			});
 			break;
 		case 'detailsInit':
