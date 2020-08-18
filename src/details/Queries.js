@@ -9,7 +9,8 @@ class Queries extends Component {
 			reports: {
 				"OPEN_PR": '-',
 				"OPEN_ISSUES": '-',
-				"OWN_PR_STATUS": {}
+				"OWN_PR_STATUS": {},
+				"AGED_PRS": {},
 			},
 			openPRLink: "",
 			openIssuesLink: "",
@@ -55,6 +56,21 @@ class Queries extends Component {
 			)
 		}
 	}
+	renderAgedOpenPRs(agedPRs) {
+		if (agedPRs) {
+			return (
+				<div>
+					{JSON.stringify(agedPRs)}
+				</div>
+			)
+		} else {
+			return (
+				<div>
+					-
+				</div>
+			)
+		}
+	}
 
 	render() {
 		return (
@@ -77,6 +93,10 @@ class Queries extends Component {
 					<tr>
 						<td><a href={this.state.yourOpenPRLink}>Status of your PR(s)</a></td>
 						<td>{this.renderOwnPRStatus(this.state.reports["OWN_PR_STATUS"])}</td>
+					</tr>
+					<tr>
+						<td>Age of open PR(s)</td>
+						<td>{this.renderAgedOpenPRs(this.state.reports["AGED_PRS"])}</td>
 					</tr>
 				</tbody>
 			</table>

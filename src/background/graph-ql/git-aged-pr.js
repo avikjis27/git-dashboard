@@ -46,7 +46,7 @@ export async function agedPRCount(accessToken, owner, repo, ep="https://api.gith
 				const createdAt = Date.parse(item.node.createdAt);
 				const author = item.node.author.login
 				const diffDays = parseInt((today - createdAt) / (1000 * 60 * 60 * 24), 10);
-				const item = {
+				const pr = {
 					title: title,
 					number: number,
 					url: url,
@@ -54,9 +54,9 @@ export async function agedPRCount(accessToken, owner, repo, ep="https://api.gith
 				};
 				if(diffDays !== 0){
 					if(result[diffDays]){
-						result[diffDays].push(item)
+						result[diffDays].push(pr)
 					} else {
-						result[diffDays] = [item]
+						result[diffDays] = [pr]
 					}
 				}
 			});
