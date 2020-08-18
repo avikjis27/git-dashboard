@@ -1,4 +1,4 @@
-import { getOpenPRCount } from './graph-ql/git-open-pr'
+import { agedPRCount } from './graph-ql/git-aged-pr'
 import {followRepo, unfollowRepo, fetchRepos, toggleFavouriteRepo} from './data-access/git-repository'
 import {fetchAccessTokens, addOrUpdateAccessToken} from './data-access/access-token'
 import {fetchQuery, addNamedQuery, deleteNamedQuery} from './data-access/named-report'
@@ -7,9 +7,10 @@ import {aggregator} from './helper/git-query-aggregator'
 
 chrome.runtime.onInstalled.addListener(() => {
 	console.log('onInstalled...');
-	addNotifications("Notification1", 1);
-	addNotifications("Notification2", 2);
-	addNotifications("Notification3", 1);
+	// addNotifications("Notification1", 1);
+	// addNotifications("Notification2", 2);
+	// addNotifications("Notification3", 1);
+
 });
 
 chrome.runtime.onMessage.addListener((msg, sender, response) => {
@@ -128,7 +129,8 @@ function follow_repo(){
 		addNamedQuery( parsedURL.domain+"/"+parsedURL.owner+"/"+parsedURL.repo, {
 			OPEN_PR: true,
 			OPEN_ISSUES: false,
-			OWN_PR_STATUS: false
+			OWN_PR_STATUS: false,
+			AGED_PRS: false,
 		})
   });
 }
