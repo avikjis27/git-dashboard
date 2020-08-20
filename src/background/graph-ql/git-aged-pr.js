@@ -52,13 +52,12 @@ export async function agedPRCount(accessToken, owner, repo, ep="https://api.gith
 					url: url,
 					author: author
 				};
-				if(diffDays !== 0){
-					if(result[diffDays]){
-						result[diffDays].push(pr)
-					} else {
-						result[diffDays] = [pr]
-					}
+				if(result[diffDays]){
+					result[diffDays].push(pr)
+				} else {
+					result[diffDays] = [pr]
 				}
+				
 			});
 			if(!response.repository.pullRequests.pageInfo.hasNextPage){
 				break;
