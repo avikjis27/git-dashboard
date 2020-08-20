@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Popup from "reactjs-popup";
 import './Queries.css';
 
 class Queries extends Component {
@@ -60,7 +61,11 @@ class Queries extends Component {
 		if (agedPRs) {
 			return (
 				<div>
-					{JSON.stringify(agedPRs)}
+					
+					<Popup trigger={ <a href="#">Details</a> } position="right center" modal closeOnDocumentClick>
+    				<div>{JSON.stringify(agedPRs)}</div>
+  				</Popup>
+					
 				</div>
 			)
 		} else {
