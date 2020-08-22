@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import BarChart from './BarChart';
+import GroupedPR from './GroupedPR';
 import Popup from "reactjs-popup";
 import './Queries.css';
 
@@ -31,7 +31,6 @@ class Queries extends Component {
 		const reportKey = domain + "/" + owner + "/" + repo;
 		chrome.runtime.sendMessage({ type: 'fetchAvailableReports', reportkey: reportKey }, (response) => {
 			if (response) {
-				console.log('fetchRequiredReports', response);
 				chrome.runtime.sendMessage({ type: 'queryGitRepo', domain: domain, owner: owner, repo: repo, reportNames: response.query }, (response) => {
 					this.setState({ reports: response });
 				});
@@ -59,36 +58,13 @@ class Queries extends Component {
 		}
 	}
 
-	groupData(data){
-		const range = [0,1,2,3,5,8,13,21]
-		const groupedData = {"Beyond 21 Days":0};
-		console.log("groupData",data)
-		Object.entries(data).map(([key, value]) => {
-			const index = range.findIndex((element) => element >= key)
-			if (index === -1){
-				groupedData["Beyond 21 Days"] = groupedData["Beyond 21 Days"]+value.length
-			}else{
-				if (groupedData[index]){
-					groupedData["Less than "+index+ " day(s)"] = groupedData["Less than "+index+ " day(s)"]+value.length;
-				}else{
-					groupedData["Less than "+index+ " day(s)"] = value.length
-				}
-			}
-			
-		});
-		return groupedData
-	}
-
 	renderAgedOpenPRs(agedPRs) {
 		if (agedPRs) {
 			return (
 				<div>
-					
 					<Popup trigger={ <a href="#">Details</a> } position="right center" modal closeOnDocumentClick>
-    				{/* <div>{JSON.stringify(agedPRs)}</div> */}
-						<div><BarChart data={this.groupData(agedPRs)}/></div>
+						<div className="details-scroll-pane"><GroupedPR data={agedPRs} /></div>
   				</Popup>
-					
 				</div>
 			)
 		} else {

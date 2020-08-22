@@ -12,3 +12,7 @@ th:first-child{
 	color: red;
   font-weight: 900;
 }
+.details-scroll-pane{
+	height: 30em;
+	overflow-y: scroll;
+}
