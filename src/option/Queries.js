@@ -12,7 +12,8 @@ class Queries extends Component {
 				OPEN_PR: false,
 				OPEN_ISSUES: false,
 				OWN_PR_STATUS: false,
-				AGED_PRS: false
+				AGED_PRS: false,
+				YOUR_CONTRIBUTION: false,
 
 			},
 			repo: this.props.repo
@@ -96,6 +97,10 @@ class Queries extends Component {
 					<tr>
 						<td>Age of open PR(s)</td>
 						<td><input type="checkbox" checked={this.state.queries["AGED_PRS"]} onChange={e => this.handleChange(e, "AGED_PRS")}></input></td>
+					</tr>
+					<tr>
+						<td>Your Contribution</td>
+						<td><input type="checkbox" checked={this.state.queries["YOUR_CONTRIBUTION"]} onChange={e => this.handleChange(e, "YOUR_CONTRIBUTION")}></input></td>
 					</tr>
 				</tbody>
 			</table>

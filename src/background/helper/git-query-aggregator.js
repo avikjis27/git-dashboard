@@ -3,6 +3,7 @@ import {getOpenPRCount} from '../graph-ql/git-open-pr'
 import {getOpenIssueCount} from '../graph-ql/git-open-issue'
 import {yourOpenPRs} from '../graph-ql/git-your-pr'
 import {agedPRCount} from '../graph-ql/git-aged-pr'
+import {yourContribution} from '../graph-ql/git-your-contribution'
 
 export async function aggregator(reqDomain, reqOwner, repo, reportNames ) {
 	const output = {};	
@@ -27,6 +28,11 @@ export async function aggregator(reqDomain, reqOwner, repo, reportNames ) {
 		const result = await agedPRCount(accessResp.token, reqOwner, repo);
 		console.log("AGED_PRS result", result)
 		output['AGED_PRS'] = result;
+	}
+	if(reportNames['YOUR_CONTRIBUTION']){
+		const result = await yourContribution(accessResp.token, reqOwner, repo);
+		console.log("YOUR_CONTRIBUTION result", result)
+		output['YOUR_CONTRIBUTION'] = result;
 	}
 	return output;
 }
