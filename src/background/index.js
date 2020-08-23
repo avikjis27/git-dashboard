@@ -6,8 +6,18 @@ import {taskAggregator} from './helper/task-aggregator'
 
 chrome.runtime.onInstalled.addListener(() => {
 	console.log('onInstalled...');
+	chrome.alarms.create("fetchTasks" ,{delayInMinutes: 1, periodInMinutes: 1	})
 
 });
+
+chrome.alarms.onAlarm.addListener((alarm) => {
+	switch(alarm.name) {
+		case 'fetchTasks':
+			console.log("fetchTasks event fired")
+			taskAggregator(true);
+			break;
+	}
+})
 
 chrome.runtime.onMessage.addListener((msg, sender, response) => {
 	switch(msg.type) {

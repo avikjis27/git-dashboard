@@ -1,10 +1,16 @@
 import {fetchAccessToken} from '../data-access/access-token'
 import {fetchRepos} from '../data-access/git-repository'
+import {cacheTasks, fetchTasks} from '../data-access/git-tasks'
 import {yourTasks} from '../graph-ql/git-your-tasks'
 import moment from 'moment';
 
-export async function taskAggregator() {
+export async function taskAggregator(noCache=false) {
 	const output = {openPRRequiredReview:[], prNeedToMerge:[],changeRequested:[]};	
+	const cachedTasks = await fetchTasks();
+	if(cachedTasks && !noCache){
+		return cachedTasks.tasks
+	}
+	console.log("cachedTasks", cachedTasks);
 	const followedRepos = await fetchRepos();
 	if(!followedRepos){
 		console.warn("No repositories found");
@@ -26,6 +32,7 @@ export async function taskAggregator() {
 		}
 	}
 	output['lastUpdated'] = moment().format('MMMM Do YYYY, h:mm:ss a');
+	cacheTasks(output);
 	console.log(taskAggregator, output)
 	return output;
 }

@@ -5,7 +5,7 @@
 	"version": "0.0.1",
 	"options_page": "option.html",
 	"permissions": [
-		"storage","tabs"
+		"storage","tabs","alarms"
 	],
 	"commands": {
 		"follow-repo": {
