@@ -24,7 +24,7 @@ const QUERY_YOUR_OPEN_PRS =
   }
 }`;
 
-export async function yourOpenPRs(accessToken, owner, repo, ep="https://api.github.com") {
+export async function yourOpenPRs(accessToken, owner, repo, ep) {
 	const graphqlWithAuth = graphql.defaults({
 		baseUrl: ep,
 		headers: {

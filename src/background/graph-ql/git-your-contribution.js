@@ -8,7 +8,7 @@ const QUERY =
   }
 }`;
 
-export async function yourContribution(accessToken, owner, repo, ep="https://api.github.com") {
+export async function yourContribution(accessToken, owner, repo, ep) {
 	const graphqlWithAuth = graphql.defaults({
 		baseUrl: ep,
 		headers: {

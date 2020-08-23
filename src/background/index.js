@@ -1,5 +1,6 @@
 import {followRepo, unfollowRepo, fetchRepos, toggleFavouriteRepo} from './data-access/git-repository'
 import {fetchAccessTokens, addOrUpdateAccessToken} from './data-access/access-token'
+import {fetchAPIEndPoints, addOrUpdateAPIEndPoint} from './data-access/api-endpoint'
 import {fetchQuery, addNamedQuery, deleteNamedQuery} from './data-access/named-report'
 import {aggregator} from './helper/git-query-aggregator'
 import {taskAggregator} from './helper/task-aggregator'
@@ -37,6 +38,10 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
 				response();
 			})
 			break;
+		case 'apiEPUpdated':
+			addOrUpdateAPIEndPoint( msg.domain, msg.ep).then (() => {
+				response();
+			})
 		case 'fetchAvailableReports':
 			fetchQuery( msg.reportkey ).then ((data) => {
 				response(data);
@@ -76,9 +81,14 @@ chrome.commands.onCommand.addListener(function(command) {
 async function initOptionPage(){
 	let repos = await fetchRepos();
 	let tokens = await fetchAccessTokens();
+	let eps = await fetchAPIEndPoints();
 	const tokenData = {};
+	const epData = {};
 	tokens.rows.forEach(row => {
 		tokenData[row.id] = row.doc.token;
+	});
+	eps.rows.forEach(row => {
+		epData[row.id] = row.doc.endPoint;
 	});
 	const data = [];
 	repos.rows.forEach(row => {
@@ -91,6 +101,7 @@ async function initOptionPage(){
 	const response = {
 		"repos": organizeData(data),
 		"tokens": tokenData,
+		"apiEndpoints": epData,
 		"queries": {}
 	};
 	return response;

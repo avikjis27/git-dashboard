@@ -8,7 +8,7 @@ const QUERY_ALL_OPEN_ISSUE_COUNT = `query totalOpenIssues($owner: String!, $repo
   }
 }`;
 
-export async function getOpenIssueCount(accessToken, owner, repo, ep="https://api.github.com") {
+export async function getOpenIssueCount(accessToken, owner, repo, ep) {
 	const graphqlWithAuth = graphql.defaults({
 		baseUrl: ep,
 		headers: {

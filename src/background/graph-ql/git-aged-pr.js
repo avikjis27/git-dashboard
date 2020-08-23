@@ -22,7 +22,7 @@ const QUERY_PR_AGE_COUNT = `query agedPRCount($owner: String!, $repo: String!, $
 	}
 }`;
 
-export async function agedPRCount(accessToken, owner, repo, ep="https://api.github.com") {
+export async function agedPRCount(accessToken, owner, repo, ep) {
 	const graphqlWithAuth = graphql.defaults({
 		baseUrl: ep,
 		headers: {

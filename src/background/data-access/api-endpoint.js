@@ -1,24 +1,24 @@
 import PouchDB from 'pouchdb';
 
 function getDB(){
-	return new PouchDB('access', { auto_compaction: true });
+	return new PouchDB('apiep', { auto_compaction: true });
 }
 
-export async function addOrUpdateAccessToken(domain, token) {
+export async function addOrUpdateAPIEndPoint(domain, endPoint) {
 	const db = getDB();
 	let existingDoc;
 	try {
-		existingDoc = await fetchAccessToken(domain);
+		existingDoc = await fetchAPIEndPoint(domain);
 		if (!existingDoc) {
 			await db.put({
 				_id: domain,
-				token: token
+				endPoint: endPoint
 			});
 		} else {
 			await db.put({
 				_id: existingDoc._id,
 				_rev: existingDoc._rev,
-				token: token
+				endPoint: endPoint
 			})
 		}
 	} catch (err) {
@@ -26,11 +26,11 @@ export async function addOrUpdateAccessToken(domain, token) {
 	}
 }
 
-export async function deleteAccessToken(domain) {
+export async function deleteAPIEndPoint(domain) {
 	const db = getDB();
 	let existingDoc;
 	try {
-		existingDoc = await fetchAccessToken(domain);
+		existingDoc = await fetchAPIEndPoint(domain);
 		if (existingDoc) {
 			await db.remove({
 				_id: existingDoc._id,
@@ -42,7 +42,7 @@ export async function deleteAccessToken(domain) {
 	}
 }
 
-export async function fetchAccessToken(domain) {
+export async function fetchAPIEndPoint(domain) {
 	const db = getDB();
 	let existingDoc;
 	try {
@@ -54,7 +54,7 @@ export async function fetchAccessToken(domain) {
 	return null;
 }
 
-export async function fetchAccessTokens() {
+export async function fetchAPIEndPoints() {
 	const db = getDB();
 	let existingDocs;
 	try {

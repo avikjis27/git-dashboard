@@ -1,4 +1,5 @@
 import {fetchAccessToken} from '../data-access/access-token'
+import {fetchAPIEndPoint} from '../data-access/api-endpoint'
 import {fetchRepos} from '../data-access/git-repository'
 import {cacheTasks, fetchTasks} from '../data-access/git-tasks'
 import {yourTasks} from '../graph-ql/git-your-tasks'
@@ -21,11 +22,13 @@ export async function taskAggregator(noCache=false) {
 		const repodetails = row.doc.details
 		if(repodetails.favourite){
 			const accessResp = await fetchAccessToken(repodetails.domain);
+			const apiEndPoint = await fetchAPIEndPoint(repodetails.domain);
+			console.log("apiEndPoint", apiEndPoint)
 			if(!accessResp.token){
 				console.warn("Access token not set for the domain "+ reqDomain);
 				return;
 			}
-			const tasks = await yourTasks(accessResp.token, repodetails.owner, repodetails.repo)
+			const tasks = await yourTasks(accessResp.token, repodetails.owner, repodetails.repo, apiEndPoint.endPoint)
 			output['openPRRequiredReview'] = output['openPRRequiredReview'].concat(tasks['openPRRequiredReview'])
 			output['prNeedToMerge'] = output['prNeedToMerge'].concat(tasks['prNeedToMerge'])
 			output['changeRequested'] = output['changeRequested'].concat(tasks['changeRequested'])

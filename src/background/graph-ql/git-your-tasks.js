@@ -50,7 +50,7 @@ async function getPRLists(accessToken, query, ep) {
 	return prList
 }
 
-export async function yourTasks(accessToken, owner, repo, ep="https://api.github.com") {
+export async function yourTasks(accessToken, owner, repo, ep) {
 	const result = {}
 	try{
 		let openPRRequiredReview = await getPRLists(accessToken, "repo:"+owner+"/"+repo+" is:pr state:open draft:false review:required", ep)

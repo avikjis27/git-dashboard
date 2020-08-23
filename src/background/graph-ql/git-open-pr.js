@@ -8,7 +8,7 @@ const QUERY_ALL_OPEN_PR_COUNT = `query totalOpenPR($owner: String!, $repo: Strin
 	}
 }`;
 
-export async function getOpenPRCount(accessToken, owner, repo, ep="https://api.github.com") {
+export async function getOpenPRCount(accessToken, owner, repo, ep) {
 	const graphqlWithAuth = graphql.defaults({
 		baseUrl: ep,
 		headers: {
