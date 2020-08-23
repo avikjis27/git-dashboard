@@ -34,11 +34,11 @@ class App extends Component {
 			<div>
 				<main className="popup-container">
 					<Notifications tasks={this.state.tasks}/>
-					<span className="last-update">* Updated: {this.state.tasks ? this.state.tasks.lastUpdated: '-'}</span>
-					<section>
+					<div className="last-update">* Updated: {this.state.tasks ? this.state.tasks.lastUpdated: '-'}</div>
+					<div className="buttons" >
 						<li onClick={this.openOptionPage}>Options</li>
 						<li onClick={this.openDetailsPage}>Details</li>
-					</section>
+					</div>
 				</main>
 			</div>
 		);

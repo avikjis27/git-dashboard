@@ -29,7 +29,9 @@ class Notifications extends Component {
 		const needToMerge = tasks.prNeedToMerge;
 		const changeRequested = tasks.changeRequested;
 		const panel = [];
+		let anyTask = false;
 		if (reviewRequired.length > 0) {
+			anyTask = true;
 			panel.push(
 				<div key="reviewRequired">
 					<Collapsible trigger="Your review required"
@@ -43,6 +45,7 @@ class Notifications extends Component {
 			);
 		}
 		if (needToMerge.length > 0) {
+			anyTask = true;
 			panel.push(
 				<div key="needToMerge">
 					<Collapsible trigger="Your PR(s) ready to be merged"
@@ -56,6 +59,7 @@ class Notifications extends Component {
 			);
 		}
 		if (changeRequested.length > 0) {
+			anyTask = true;
 			panel.push(
 				<div key="changeRequested">
 					<Collapsible trigger="Change requested on your PR(s)"
@@ -67,6 +71,13 @@ class Notifications extends Component {
 					</Collapsible>
 				</div>
 			);
+		}
+		if (!anyTask){
+			return (
+				<div className="noTask">
+					Great! No pending tasks.
+				</div>
+			)
 		}
 		return panel;
 	}
