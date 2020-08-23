@@ -4,21 +4,17 @@ import {fetchAccessTokens, addOrUpdateAccessToken} from './data-access/access-to
 import {fetchQuery, addNamedQuery, deleteNamedQuery} from './data-access/named-report'
 import { fetchIndexedNotifications, addNotifications } from './data-access/git-notifications'
 import {aggregator} from './helper/git-query-aggregator'
+import {taskAggregator} from './helper/task-aggregator'
 
 chrome.runtime.onInstalled.addListener(() => {
 	console.log('onInstalled...');
-	// addNotifications("Notification1", 1);
-	// addNotifications("Notification2", 2);
-	// addNotifications("Notification3", 1);
 
 });
 
 chrome.runtime.onMessage.addListener((msg, sender, response) => {
 	switch(msg.type) {
 		case 'popupInit':
-			fetchIndexedNotifications().then (data => {
-				response(data)
-			});
+			taskAggregator();
 			break;
 		case 'detailsInit':
 		case 'optionInit':
