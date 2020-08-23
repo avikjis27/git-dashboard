@@ -1,8 +1,6 @@
-import { agedPRCount } from './graph-ql/git-aged-pr'
 import {followRepo, unfollowRepo, fetchRepos, toggleFavouriteRepo} from './data-access/git-repository'
 import {fetchAccessTokens, addOrUpdateAccessToken} from './data-access/access-token'
 import {fetchQuery, addNamedQuery, deleteNamedQuery} from './data-access/named-report'
-import { fetchIndexedNotifications, addNotifications } from './data-access/git-notifications'
 import {aggregator} from './helper/git-query-aggregator'
 import {taskAggregator} from './helper/task-aggregator'
 
@@ -14,7 +12,9 @@ chrome.runtime.onInstalled.addListener(() => {
 chrome.runtime.onMessage.addListener((msg, sender, response) => {
 	switch(msg.type) {
 		case 'popupInit':
-			taskAggregator();
+			taskAggregator().then ((tasks) => {
+				response(tasks);
+			})
 			break;
 		case 'detailsInit':
 		case 'optionInit':

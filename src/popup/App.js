@@ -8,7 +8,7 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-				notifications: []
+				tasks: null
 		};
 	}
 
@@ -22,9 +22,8 @@ class App extends Component {
 	componentDidMount() {
 		chrome.runtime.sendMessage({ type: 'popupInit' }, (response) => {
 			if (response) {
-				console.log('popupInit', response);
 				this.setState({
-					notifications: response.docs
+					tasks: response
 				});
 			}
 		});
@@ -34,11 +33,8 @@ class App extends Component {
 		return (
 			<div>
 				<main className="popup-container">
-					{/* <section className="refresh">
-						<img src="refresh16.png"></img>
-					</section> */}
-					<Notifications notifications={this.state.notifications}/>
-					<span className="last-update">* Updated: 18th July, 2020 23.30</span>
+					<Notifications tasks={this.state.tasks}/>
+					<span className="last-update">* Updated: {this.state.tasks ? this.state.tasks.lastUpdated: '-'}</span>
 					<section>
 						<li onClick={this.openOptionPage}>Options</li>
 						<li onClick={this.openDetailsPage}>Details</li>
