@@ -1,4 +1,5 @@
 import { graphql } from "@octokit/graphql"
+import {whoami} from "./git-who-am-i"
 
 const QUERY = 
 `query openPRs($q: String!, $next: String) {
@@ -19,6 +20,8 @@ const QUERY =
 }`;
 
 
+
+
 async function getPRLists(accessToken, query, ep) {
 	const prList = []
 	const graphqlWithAuth = graphql.defaults({
@@ -33,6 +36,7 @@ async function getPRLists(accessToken, query, ep) {
 			q: query,
 			next: nextCursor
 		});
+		console.log("getPRLists",query,response)
 		response.search.edges.forEach(item => {
 			const url = item.node.url;
 			const number = item.node.number;
@@ -52,10 +56,12 @@ async function getPRLists(accessToken, query, ep) {
 
 export async function yourTasks(accessToken, owner, repo, ep) {
 	const result = {}
+	console.log("ENDPOINT PASSED: yourTasks",ep)
+	const me = await whoami(accessToken, ep)
 	try{
-		let openPRRequiredReview = await getPRLists(accessToken, "repo:"+owner+"/"+repo+" is:pr state:open draft:false review:required", ep)
-		let prNeedToMerge = await getPRLists(accessToken, "repo:"+owner+"/"+repo+" is:pr state:open review:approved author:@me", ep)
-		let changeRequested = await getPRLists(accessToken, "repo:"+owner+"/"+repo+" is:pr state:open review:changes_requested author:@me", ep)
+		let openPRRequiredReview = await getPRLists(accessToken, "repo:"+owner+"/"+repo+" is:pr state:open draft:false review:none", ep)
+		let prNeedToMerge = await getPRLists(accessToken, "repo:"+owner+"/"+repo+" is:pr state:open review:approved author:"+me, ep)
+		let changeRequested = await getPRLists(accessToken, "repo:"+owner+"/"+repo+" is:pr state:open review:changes_requested author:"+me, ep)
 		result['openPRRequiredReview'] = openPRRequiredReview
 		result['prNeedToMerge'] = prNeedToMerge
 		result['changeRequested'] = changeRequested
@@ -63,5 +69,6 @@ export async function yourTasks(accessToken, owner, repo, ep) {
 		console.log("Request failed:", error.request);
 		console.log(error.message);
 	}
+	console.log("Task Result", result)
 	return result;
 }

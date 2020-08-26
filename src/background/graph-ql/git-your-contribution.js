@@ -1,4 +1,5 @@
 import { graphql } from "@octokit/graphql"
+import {whoami} from "./git-who-am-i"
 import moment from 'moment';
 
 const QUERY = 
@@ -8,6 +9,8 @@ const QUERY =
   }
 }`;
 
+
+
 export async function yourContribution(accessToken, owner, repo, ep) {
 	const graphqlWithAuth = graphql.defaults({
 		baseUrl: ep,
@@ -15,11 +18,14 @@ export async function yourContribution(accessToken, owner, repo, ep) {
 			authorization: "token " + accessToken,
 		},
 	});
+	
 	const result = {"yourReviews":0,"totalPRRaised":0}
 	try{
 		const pastDate = moment().subtract(7, 'days').format("YYYY-MM-DD")
+		console.log("ENDPOINT PASSED: yourContribution",ep)
+		let me = await whoami(accessToken, ep);
 		let response = await graphqlWithAuth(QUERY, {
-			q: "repo:"+owner+"/"+repo+" is:pr created:>"+pastDate+" reviewed-by:@me"
+			q: "repo:"+owner+"/"+repo+" is:pr created:>"+pastDate+" reviewed-by:"+me
 		});
 		result.yourReviews = response.search.issueCount
 		response = await graphqlWithAuth(QUERY, {

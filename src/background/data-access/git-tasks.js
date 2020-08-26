@@ -6,7 +6,7 @@ function getDB() {
 
 export async function cacheTasks(tasks) {
 	const db = getDB();
-	let existingDoc = await db.get("1");
+	let existingDoc = await fetchTasks();
 	try {
 		if (existingDoc) {
 			await db.put({
@@ -16,7 +16,7 @@ export async function cacheTasks(tasks) {
 			});
 		} else {
 			await db.put({
-				id: "1",
+				_id: "1",
 				tasks: tasks
 			});
 		}

@@ -18,6 +18,7 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 			taskAggregator(true);
 			break;
 	}
+	return true;
 })
 
 chrome.runtime.onMessage.addListener((msg, sender, response) => {

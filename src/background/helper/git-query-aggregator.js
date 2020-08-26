@@ -9,30 +9,30 @@ import {yourContribution} from '../graph-ql/git-your-contribution'
 export async function aggregator(reqDomain, reqOwner, repo, reportNames ) {
 	const output = {};	
 	const accessResp = await fetchAccessToken(reqDomain);
-	const apiEndPoint = await fetchAPIEndPoint(reqDomain);
+	const apiEndPoint = "https://"+ reqDomain + "/" + "api";
 	if(!accessResp.token){
 		console.warn("Access token not set for the domain "+ reqDomain);
 		return;
 	}
 	if(reportNames['OPEN_PR']){
-		const count = await getOpenPRCount(accessResp.token, reqOwner, repo, apiEndPoint.endPoint);
+		const count = await getOpenPRCount(accessResp.token, reqOwner, repo, apiEndPoint);
 		output['OPEN_PR'] = count;
 	}
 	if(reportNames['OPEN_ISSUES']){
-		const count = await getOpenIssueCount(accessResp.token, reqOwner, repo, apiEndPoint.endPoint);
+		const count = await getOpenIssueCount(accessResp.token, reqOwner, repo, apiEndPoint);
 		output['OPEN_ISSUES'] = count;
 	}
 	if(reportNames['OWN_PR_STATUS']){
-		const result = await yourOpenPRs(accessResp.token, reqOwner, repo, apiEndPoint.endPoint);
+		const result = await yourOpenPRs(accessResp.token, reqOwner, repo, apiEndPoint);
 		output['OWN_PR_STATUS'] = result;
 	}
 	if(reportNames['AGED_PRS']){
-		const result = await agedPRCount(accessResp.token, reqOwner, repo, apiEndPoint.endPoint);
+		const result = await agedPRCount(accessResp.token, reqOwner, repo, apiEndPoint);
 		console.log("AGED_PRS result", result)
 		output['AGED_PRS'] = result;
 	}
 	if(reportNames['YOUR_CONTRIBUTION']){
-		const result = await yourContribution(accessResp.token, reqOwner, repo, apiEndPoint.endPoint);
+		const result = await yourContribution(accessResp.token, reqOwner, repo, apiEndPoint);
 		console.log("YOUR_CONTRIBUTION result", result)
 		output['YOUR_CONTRIBUTION'] = result;
 	}

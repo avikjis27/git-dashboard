@@ -22,13 +22,13 @@ export async function taskAggregator(noCache=false) {
 		const repodetails = row.doc.details
 		if(repodetails.favourite){
 			const accessResp = await fetchAccessToken(repodetails.domain);
-			const apiEndPoint = await fetchAPIEndPoint(repodetails.domain);
+			const apiEndPoint = "https://"+ repodetails.domain + "/" + "api";
 			console.log("apiEndPoint", apiEndPoint)
 			if(!accessResp.token){
-				console.warn("Access token not set for the domain "+ reqDomain);
+				console.warn("Access token not set for the domain "+ repodetails.domain);
 				return;
 			}
-			const tasks = await yourTasks(accessResp.token, repodetails.owner, repodetails.repo, apiEndPoint.endPoint)
+			const tasks = await yourTasks(accessResp.token, repodetails.owner, repodetails.repo, apiEndPoint)
 			output['openPRRequiredReview'] = output['openPRRequiredReview'].concat(tasks['openPRRequiredReview'])
 			output['prNeedToMerge'] = output['prNeedToMerge'].concat(tasks['prNeedToMerge'])
 			output['changeRequested'] = output['changeRequested'].concat(tasks['changeRequested'])
