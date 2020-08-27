@@ -5,7 +5,7 @@ import {yourTasks} from '../graph-ql/git-your-tasks'
 import moment from 'moment';
 
 export async function taskAggregator(noCache=false) {
-	const output = {openPRRequiredReview:[], prNeedToMerge:[],changeRequested:[]};	
+	const output = {hasTask: false, openPRRequiredReview:[], prNeedToMerge:[],changeRequested:[]};	
 	const cachedTasks = await fetchTasks();
 	if(cachedTasks && !noCache){
 		return cachedTasks.tasks
@@ -34,6 +34,9 @@ export async function taskAggregator(noCache=false) {
 		}
 	}
 	output['lastUpdated'] = moment().format('MMMM Do YYYY, h:mm:ss a');
+	if(output['openPRRequiredReview'].length > 0 || output['prNeedToMerge'].length > 0 || output['changeRequested'].length > 0){
+		output.hasTask = true;
+	}
 	cacheTasks(output);
 	console.log(taskAggregator, output)
 	return output;

@@ -14,7 +14,13 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 	switch(alarm.name) {
 		case 'fetchTasks':
 			console.log("fetchTasks event fired")
-			taskAggregator(true);
+			taskAggregator(true).then ((resp) => {
+				if (resp.hasTask){
+					chrome.browserAction.setIcon({path: "pr16-red.png"});
+				}else{
+					chrome.browserAction.setIcon({path: "pr16-green.png"});
+				}
+			})
 			break;
 	}
 	return true;
