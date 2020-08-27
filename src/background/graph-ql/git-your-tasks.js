@@ -54,15 +54,28 @@ async function getPRLists(accessToken, query, ep) {
 	return prList
 }
 
+function findOpenPRRequiredReview(openNonDraftPR, prReviewdByMe){
+	console.log("findOpenPRRequiredReview",openNonDraftPR)
+	console.log("prReviewdByMe",prReviewdByMe)
+	const openPRRequiredReview = openNonDraftPR.filter(openPR => {
+		const reviewPR = prReviewdByMe.find(reviewedPR => {
+			return reviewedPR.number === openPR.number
+		});
+		return reviewPR == null ? true: false;
+	});
+	return openPRRequiredReview;
+}
+
 export async function yourTasks(accessToken, owner, repo, ep) {
 	const result = {}
-	console.log("ENDPOINT PASSED: yourTasks",ep)
+	
 	const me = await whoami(accessToken, ep)
 	try{
-		let openPRRequiredReview = await getPRLists(accessToken, "repo:"+owner+"/"+repo+" is:pr state:open draft:false review:none", ep)
+		let openNonDraftPR= await getPRLists(accessToken, "repo:"+owner+"/"+repo+" is:pr state:open draft:false", ep)
+		let prReviewdByMe = await getPRLists(accessToken, "repo:"+owner+"/"+repo+" is:pr state:open reviewed-by:"+me, ep)
 		let prNeedToMerge = await getPRLists(accessToken, "repo:"+owner+"/"+repo+" is:pr state:open review:approved author:"+me, ep)
 		let changeRequested = await getPRLists(accessToken, "repo:"+owner+"/"+repo+" is:pr state:open review:changes_requested author:"+me, ep)
-		result['openPRRequiredReview'] = openPRRequiredReview
+		result['openPRRequiredReview'] = findOpenPRRequiredReview(openNonDraftPR, prReviewdByMe)
 		result['prNeedToMerge'] = prNeedToMerge
 		result['changeRequested'] = changeRequested
 	}catch(error){

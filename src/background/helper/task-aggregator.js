@@ -1,5 +1,4 @@
 import {fetchAccessToken} from '../data-access/access-token'
-import {fetchAPIEndPoint} from '../data-access/api-endpoint'
 import {fetchRepos} from '../data-access/git-repository'
 import {cacheTasks, fetchTasks} from '../data-access/git-tasks'
 import {yourTasks} from '../graph-ql/git-your-tasks'

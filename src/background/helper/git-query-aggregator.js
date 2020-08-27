@@ -1,5 +1,4 @@
 import {fetchAccessToken} from '../data-access/access-token'
-import {fetchAPIEndPoint} from '../data-access/api-endpoint'
 import {getOpenPRCount} from '../graph-ql/git-open-pr'
 import {getOpenIssueCount} from '../graph-ql/git-open-issue'
 import {yourOpenPRs} from '../graph-ql/git-your-pr'

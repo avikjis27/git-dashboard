@@ -69,12 +69,6 @@ fieldset{
 .access-token-input {
 	margin-left: 25px;
 }
-.api-ep {
-	padding: 0 25px 25px 25px;
-}
-.api-ep-input {
-	margin-left: 86px;
-}
 
 .repo-controls {
 	float: right;
