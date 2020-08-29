@@ -7,7 +7,7 @@ class Header extends Component {
 	}
 	render() {
 		return (
-			<div><h1>Configure Git Dashboard</h1></div>
+			<div><h1>Detail Status</h1></div>
 		)
 	}
 }

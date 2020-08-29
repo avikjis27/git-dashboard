@@ -75,3 +75,12 @@ fieldset{
 	left: 50%;
 	transform: translate(-50%, -50%);
 }
+
+.norepo-message{
+	padding: 20%;
+	font-size: medium;
+}
+.message-header{
+	font-weight: bold;
+    color: #ff9800;
+}

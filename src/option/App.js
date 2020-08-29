@@ -69,6 +69,22 @@ class App extends Component {
 				</div>
 			);
 		});
+		if (panel.length == 0) {
+			return (
+			<div className="norepo-message">
+				<div className="message-header">No repository added</div>
+				<div>
+					<ul>
+						<li>Open a Git repository page</li>
+						<li>Press [ Option + Shift + F ] to follow the repository</li>
+						<li>Press [ Option + Shift + U ] to unfollow the repository</li>
+						<li>Open extension's option page</li>
+						<li>Ensure each domain has an Accecc Token</li>
+					</ul>
+				</div>
+			</div>
+			)
+		}
 		return panel;
 	}
 
