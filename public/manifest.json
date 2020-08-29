@@ -36,8 +36,8 @@
 	],
 	"icons": {
 		"16": "pr16.png",
-		"48": "pr16.png",
-		"128": "pr16.png"
+		"48": "pr48.png",
+		"128": "pr128.png"
 	},
 	"background": {
 		"scripts": [

@@ -17,6 +17,8 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 			taskAggregator(true).then ((resp) => {
 				if (resp.hasTask){
 					chrome.browserAction.setIcon({path: "pr16-red.png"});
+					var alarm = new Audio(chrome.runtime.getURL("bird.m4a"));
+					alarm.play();
 				}else{
 					chrome.browserAction.setIcon({path: "pr16-green.png"});
 				}
@@ -30,6 +32,16 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
 	switch(msg.type) {
 		case 'popupInit':
 			taskAggregator().then ((tasks) => {
+				response(tasks);
+			})
+			break;
+		case 'syncTask':
+			taskAggregator(true).then ((tasks) => {
+				if (tasks.hasTask){
+					chrome.browserAction.setIcon({path: "pr16-red.png"});
+				}else{
+					chrome.browserAction.setIcon({path: "pr16-green.png"});
+				}
 				response(tasks);
 			})
 			break;

@@ -56,3 +56,10 @@ fieldset:first-child {
 	margin: -5px 8px 4px;
 	height: 1em;
 }
+.popup-menu{
+	position: absolute;
+	z-index: 100000;
+	left: 227px;
+	top: 6px;
+	cursor: pointer;
+}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Queries.css';
-import { faHeart, faHeartBroken, faLink, faSadTear, faStar, faThumbsDown, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faHeartBroken } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class Queries extends Component {
