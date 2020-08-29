@@ -12,7 +12,7 @@ class Queries extends Component {
 				"OPEN_PR": '-',
 				"OPEN_ISSUES": '-',
 				"OWN_PR_STATUS": {},
-				"AGED_PRS": null,
+				"AGED_PRS": {},
 				"YOUR_CONTRIBUTION": '-'
 			},
 			openPRLink: "",
@@ -45,7 +45,6 @@ class Queries extends Component {
 			const reviewRequired = ownPRStatus["REVIEW_REQUIRED"] ? ownPRStatus["REVIEW_REQUIRED"].length : '-';
 			const approved = ownPRStatus["APPROVED"] ? ownPRStatus["APPROVED"].length : '-';
 			const changesRequested = ownPRStatus["CHANGES_REQUESTED"] ? ownPRStatus["CHANGES_REQUESTED"].length : '-';
-			//const yourContribution = ownPRStatus["YOUR_CONTRIBUTION"] ? ownPRStatus["CHANGES_REQUESTED"].length : '-';
 			return (
 				<div>
 					<span>Review Required:</span> {reviewRequired} <span className="approved">Approved:</span> {approved} <span className="change-required">Change Requested:</span> {changesRequested}
@@ -77,7 +76,7 @@ class Queries extends Component {
 	}
 
 	renderAgedOpenPRs(agedPRs) {
-		if (agedPRs) {
+		if (this.state.reports["OPEN_PR"] != '0') {
 			return (
 				<div>
 					<Popup trigger={ <a href="#">Details</a> } position="right center" modal closeOnDocumentClick>
@@ -88,7 +87,7 @@ class Queries extends Component {
 		} else {
 			return (
 				<div>
-					-
+					No Open PR
 				</div>
 			)
 		}
@@ -97,12 +96,12 @@ class Queries extends Component {
 	render() {
 		return (
 			<table>
-				<thead>
+				{/* <thead>
 					<tr>
 						<th>Query Name</th>
 						<th>Result</th>
 					</tr>
-				</thead>
+				</thead> */}
 				<tbody>
 					<tr>
 						<td><a href={this.state.openPRLink}>All Open PR(s)</a></td>

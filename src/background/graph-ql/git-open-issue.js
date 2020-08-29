@@ -21,7 +21,7 @@ export async function getOpenIssueCount(accessToken, owner, repo, ep) {
 			"owner": owner,
 			"repo": repo,
 		});
-		openIssueCount = response.repository.issues.totalCount;
+		openIssueCount = response.repository.issues.totalCount.toString();
 	}catch(error){
 		console.log("Request failed:", error.request);
 		console.log(error.message);

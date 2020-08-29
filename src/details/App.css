@@ -50,15 +50,14 @@ fieldset{
 	background-color: aliceblue;
 }
 .domain-style-content-inner {
-	padding: 5px 5px 5px 30px;
+	padding: 5px 20px 5px 20px;
 }
 
 .owner-style-content-outer {
 	background-color: #e0eef5;
-	padding: 0px 0px 0px 30px;
 }
 .owner-style-content-inner {
-	padding: 0px 0px 0px 10px;
+	padding: 0px 10px 0px 10px;
 }
 .repo-details{
 	margin-top: 10px
