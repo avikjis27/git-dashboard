@@ -2,6 +2,7 @@ import {fetchAccessToken} from '../data-access/access-token'
 import {fetchRepos} from '../data-access/git-repository'
 import {cacheTasks, fetchTasks} from '../data-access/git-tasks'
 import {yourTasks} from '../graph-ql/git-your-tasks'
+import {getEP} from './get-endpoint'
 import moment from 'moment';
 
 export async function taskAggregator(noCache=false) {
@@ -21,7 +22,7 @@ export async function taskAggregator(noCache=false) {
 		const repodetails = row.doc.details
 		if(repodetails.favourite){
 			const accessResp = await fetchAccessToken(repodetails.domain);
-			const apiEndPoint = "https://"+ repodetails.domain + "/" + "api";
+			const apiEndPoint = getEP(repodetails.domain);
 			console.log("apiEndPoint", apiEndPoint)
 			if(!accessResp.token){
 				console.warn("Access token not set for the domain "+ repodetails.domain);

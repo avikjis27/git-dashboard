@@ -4,11 +4,12 @@ import {getOpenIssueCount} from '../graph-ql/git-open-issue'
 import {yourOpenPRs} from '../graph-ql/git-your-pr'
 import {agedPRCount} from '../graph-ql/git-aged-pr'
 import {yourContribution} from '../graph-ql/git-your-contribution'
+import {getEP} from './get-endpoint'
 
 export async function aggregator(reqDomain, reqOwner, repo, reportNames ) {
 	const output = {};	
 	const accessResp = await fetchAccessToken(reqDomain);
-	const apiEndPoint = "https://"+ reqDomain + "/" + "api";
+	const apiEndPoint = getEP(reqDomain);
 	if(!accessResp.token){
 		console.warn("Access token not set for the domain "+ reqDomain);
 		return;

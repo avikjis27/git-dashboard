@@ -43,7 +43,7 @@ class App extends Component {
 		if (panel.length == 0) {
 			return (
 			<div className="norepo-message">
-				<div className="message-header">No repository added</div>
+				<div className="message-header">No repository added or No queries selected</div>
 				<div>
 					<ul>
 						<li>Open a Git repository page</li>
@@ -51,6 +51,7 @@ class App extends Component {
 						<li>Press [ Option + Shift + U ] to unfollow the repository</li>
 						<li>Open extension's option page</li>
 						<li>Ensure each domain has an Accecc Token</li>
+						<li>Select the reports you want</li>
 					</ul>
 				</div>
 			</div>
