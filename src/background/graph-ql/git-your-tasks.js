@@ -36,7 +36,6 @@ async function getPRLists(accessToken, query, ep) {
 			q: query,
 			next: nextCursor
 		});
-		console.log("getPRLists",query,response)
 		response.search.edges.forEach(item => {
 			const url = item.node.url;
 			const number = item.node.number;
@@ -55,8 +54,6 @@ async function getPRLists(accessToken, query, ep) {
 }
 
 function findOpenPRRequiredReview(openNonDraftPR, prReviewdByMe){
-	console.log("findOpenPRRequiredReview",openNonDraftPR)
-	console.log("prReviewdByMe",prReviewdByMe)
 	const openPRRequiredReview = openNonDraftPR.filter(openPR => {
 		const reviewPR = prReviewdByMe.find(reviewedPR => {
 			return reviewedPR.number === openPR.number
@@ -80,8 +77,7 @@ export async function yourTasks(accessToken, owner, repo, ep) {
 		result['changeRequested'] = changeRequested
 	}catch(error){
 		console.log("Request failed:", error.request);
-		console.log(error.message);
+		console.error(error.message);
 	}
-	console.log("Task Result", result)
 	return result;
 }

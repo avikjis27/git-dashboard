@@ -67,8 +67,7 @@ export async function yourOpenPRs(accessToken, owner, repo, ep) {
 		
 	}catch(error){
 		console.log("Request failed:", error.request);
-		console.log(error.message);
+		console.error(error.message);
 	}
-	console.log("yourOpenPRs",result);
 	return result;
 }

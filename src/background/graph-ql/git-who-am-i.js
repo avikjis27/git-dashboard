@@ -8,7 +8,6 @@ const ME =
 }`
 
 export async function whoami(accessToken, ep) {
-	console.log("ENDPOINT PASSED",ep)
 	const graphqlWithAuth = graphql.defaults({
 		baseUrl: ep,
 		headers: {
@@ -20,7 +19,7 @@ export async function whoami(accessToken, ep) {
 		whoami = await graphqlWithAuth(ME);
 	} catch (error) {
 		console.log("Request failed:", error.request);
-		console.log(error.message);
+		console.error(error.message);
 	}
 	return whoami.viewer.login;
 }

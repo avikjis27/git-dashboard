@@ -24,7 +24,7 @@ export async function getOpenPRCount(accessToken, owner, repo, ep) {
 		openPRCount = response.repository.pullRequests.totalCount.toString();
 	}catch(error){
 		console.log("Request failed:", error.request);
-		console.log(error.message);
+		console.error(error.message);
 	}
 	return openPRCount;
 }

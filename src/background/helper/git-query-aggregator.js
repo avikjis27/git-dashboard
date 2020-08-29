@@ -28,12 +28,10 @@ export async function aggregator(reqDomain, reqOwner, repo, reportNames ) {
 	}
 	if(reportNames['AGED_PRS']){
 		const result = await agedPRCount(accessResp.token, reqOwner, repo, apiEndPoint);
-		console.log("AGED_PRS result", result)
 		output['AGED_PRS'] = result;
 	}
 	if(reportNames['YOUR_CONTRIBUTION']){
 		const result = await yourContribution(accessResp.token, reqOwner, repo, apiEndPoint);
-		console.log("YOUR_CONTRIBUTION result", result)
 		output['YOUR_CONTRIBUTION'] = result;
 	}
 	return output;

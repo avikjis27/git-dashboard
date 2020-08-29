@@ -11,7 +11,6 @@ export async function taskAggregator(noCache=false) {
 	if(cachedTasks && !noCache){
 		return cachedTasks.tasks
 	}
-	console.log("cachedTasks", cachedTasks);
 	const followedRepos = await fetchRepos();
 	if(!followedRepos){
 		console.warn("No repositories found");
@@ -23,7 +22,6 @@ export async function taskAggregator(noCache=false) {
 		if(repodetails.favourite){
 			const accessResp = await fetchAccessToken(repodetails.domain);
 			const apiEndPoint = getEP(repodetails.domain);
-			console.log("apiEndPoint", apiEndPoint)
 			if(!accessResp.token){
 				console.warn("Access token not set for the domain "+ repodetails.domain);
 				return;
@@ -39,7 +37,6 @@ export async function taskAggregator(noCache=false) {
 		output.hasTask = true;
 	}
 	cacheTasks(output);
-	console.log(taskAggregator, output)
 	return output;
 }
 

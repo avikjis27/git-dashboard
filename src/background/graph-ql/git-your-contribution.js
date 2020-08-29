@@ -22,7 +22,6 @@ export async function yourContribution(accessToken, owner, repo, ep) {
 	const result = {"yourReviews":0,"totalPRRaised":0}
 	try{
 		const pastDate = moment().subtract(7, 'days').format("YYYY-MM-DD")
-		console.log("ENDPOINT PASSED: yourContribution",ep)
 		let me = await whoami(accessToken, ep);
 		let response = await graphqlWithAuth(QUERY, {
 			q: "repo:"+owner+"/"+repo+" is:pr created:>"+pastDate+" reviewed-by:"+me
@@ -35,7 +34,7 @@ export async function yourContribution(accessToken, owner, repo, ep) {
 		
 	}catch(error){
 		console.log("Request failed:", error.request);
-		console.log(error.message);
+		console.error(error.message);
 	}
 	return result;
 }

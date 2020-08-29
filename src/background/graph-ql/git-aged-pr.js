@@ -68,7 +68,7 @@ export async function agedPRCount(accessToken, owner, repo, ep) {
 		
 	}catch(error){
 		console.log("Request failed:", error.request);
-		console.log(error.message);
+		console.error(error.message);
 	}
 	return result;
 }
