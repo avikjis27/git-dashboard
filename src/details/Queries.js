@@ -76,7 +76,7 @@ class Queries extends Component {
 	}
 
 	renderAgedOpenPRs(agedPRs) {
-		if (this.state.reports["OPEN_PR"] != '0') {
+		if (this.state.reports["AGED_PRS"] && Object.keys(this.state.reports["AGED_PRS"]).length > 0) {
 			return (
 				<div>
 					<Popup trigger={ <a href="#">Details</a> } position="right center" modal closeOnDocumentClick>
@@ -87,7 +87,7 @@ class Queries extends Component {
 		} else {
 			return (
 				<div>
-					No Open PR
+					-
 				</div>
 			)
 		}
