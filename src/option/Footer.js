@@ -8,7 +8,7 @@ class Footer extends Component {
 	render() {
 		return (
 			<footer>
-				<div>A hobby project of Avik Chakraborty |  <a href="mailto:avikjis27@gmail.com">avikjis27@gmail.com</a> | <a href="https://github.com/avikjis27">GitHub</a> | <a href="https://www.linkedin.com/in/avikjis27/">LinkedIn</a></div>
+				<div>A hobby project of Avik Chakraborty |  <a href="mailto:avikjis27@gmail.com">avikjis27@gmail.com</a> | <a href="https://github.com/avikjis27/git-dashboard/issues">Report issues or Suggest features</a></div>
 			</footer>
 		)
 	}

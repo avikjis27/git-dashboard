@@ -7,18 +7,30 @@ import {taskAggregator} from './helper/task-aggregator'
 chrome.runtime.onInstalled.addListener(() => {
 	console.log('onInstalled...');
 	chrome.alarms.create("fetchTasks" ,{delayInMinutes: 1, periodInMinutes: 15	})
+	chrome.alarms.create("remindTasks" ,{delayInMinutes: 1, periodInMinutes: 5	})
 
 });
 
 chrome.alarms.onAlarm.addListener((alarm) => {
 	switch(alarm.name) {
+		case 'remindTasks':
+			taskAggregator(false).then ((resp) => {
+				if (resp.hasTask){
+					chrome.browserAction.setIcon({path: "pr16-red.png"});
+					var alarm = new Audio(chrome.runtime.getURL("bird.m4a"));
+					alarm.play();
+				} else{
+					chrome.browserAction.setIcon({path: "pr16-green.png"});
+				}
+			})
+			break;
 		case 'fetchTasks':
 			taskAggregator(true).then ((resp) => {
 				if (resp.hasTask){
 					chrome.browserAction.setIcon({path: "pr16-red.png"});
 					var alarm = new Audio(chrome.runtime.getURL("bird.m4a"));
 					alarm.play();
-				}else{
+				} else{
 					chrome.browserAction.setIcon({path: "pr16-green.png"});
 				}
 			})
