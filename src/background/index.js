@@ -1,6 +1,7 @@
 import {followRepo, unfollowRepo, fetchRepos, toggleFavouriteRepo} from './data-access/git-repository'
 import {fetchAccessTokens, addOrUpdateAccessToken} from './data-access/access-token'
 import {fetchQuery, addNamedQuery, deleteNamedQuery} from './data-access/named-report'
+import {addOrUpdateIgnorePR} from './data-access/ignored-pr'
 import {aggregator} from './helper/git-query-aggregator'
 import {taskAggregator} from './helper/task-aggregator'
 
@@ -87,6 +88,10 @@ chrome.runtime.onMessage.addListener((msg, sender, response) => {
 				response();
 			})
 			break;
+		case 'ignorePR':
+			addOrUpdateIgnorePR( msg.url ).then (() => {
+				response();
+			})
 		default:
 	}
 	return true;

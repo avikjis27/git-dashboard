@@ -45,13 +45,13 @@ class App extends Component {
 			<div>
 				<main className="popup-container">
 					<div className="popup-menu">
-						<FontAwesomeIcon onClick={this.syncTask} icon={faSync} />
+						<FontAwesomeIcon onClick={()=>this.syncTask()} icon={faSync} />
 					</div>
 					<Notifications tasks={this.state.tasks}/>
 					<div className="last-update">* Updated: {this.state.tasks ? this.state.tasks.lastUpdated : '-'}</div>
 					<div className="buttons" >
-						<li onClick={this.openOptionPage}>Options</li>
-						<li onClick={this.openDetailsPage}>Details</li>
+						<li onClick={()=>this.openOptionPage()}>Options</li>
+						<li onClick={()=>this.openDetailsPage()}>Details</li>
 					</div>
 				</main>
 			</div>

@@ -2,15 +2,28 @@
 import React, { Component } from 'react';
 import Collapsible from 'react-collapsible';
 import './Notifications.css';
+import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class Notifications extends Component {
 
+	
+
 	createPRDetails(prList) {
+		let ignorePR = (url) => {
+			chrome.runtime.sendMessage({ type: 'ignorePR', url: url }, () => {
+				this.props.tasks.openPRRequiredReview.pop();
+			});
+		}
+		let openPR = (url) => {
+			chrome.tabs.create({url:url});
+		}
 		const prBadges = []
 		prList.forEach((item, index) => {
 			prBadges.push(
 				<div className="badge" key={index}>
-					<a href={item.url}>{item.number}</a>
+					<div className="badge-pr" onClick={() => openPR(item.url)}>{item.number}</div>
+					<div className="badge-ignore" onClick={() => ignorePR(item.url)}><FontAwesomeIcon  icon={faTimesCircle} /></div>
 				</div>
 			)
 		});
