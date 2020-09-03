@@ -10,9 +10,10 @@ class Notifications extends Component {
 	
 
 	createPRDetails(prList) {
-		let ignorePR = (url) => {
+		let ignorePR = (url, syncTask) => {
+			syncTask()
 			chrome.runtime.sendMessage({ type: 'ignorePR', url: url }, () => {
-				this.props.tasks.openPRRequiredReview.pop();
+				
 			});
 		}
 		let openPR = (url) => {
@@ -23,7 +24,7 @@ class Notifications extends Component {
 			prBadges.push(
 				<div className="badge" key={index}>
 					<div className="badge-pr" onClick={() => openPR(item.url)}>{item.number}</div>
-					<div className="badge-ignore" onClick={() => ignorePR(item.url)}><FontAwesomeIcon  icon={faTimesCircle} /></div>
+					<div className="badge-ignore" onClick={() => ignorePR(item.url, this.props.syncTask)}><FontAwesomeIcon  icon={faTimesCircle} /></div>
 				</div>
 			)
 		});
