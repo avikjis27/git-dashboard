@@ -104,10 +104,15 @@ fieldset{
 .badge{
   float:left;
   border: 2px solid #73AD21;
-  width:3em;
+  width:5em;
   padding:5px;
-  border-radius: 8px;
   text-align:center;
   cursor: pointer;
   margin: 2px;
+}
+.badge-pr{
+	float: left;
+}
+.badge-ignore{
+	float: right;
 }
