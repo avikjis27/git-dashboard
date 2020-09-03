@@ -4,7 +4,7 @@ import './App.css';
 import Notifications from './Notifications'
 import { faSync } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import LoadingOverlay from 'react-loading-overlay';
+import { SpinnerComponent } from 'react-element-spinner';
 
 class App extends Component {
 
@@ -49,8 +49,8 @@ class App extends Component {
 
 	render() {
 		return (
-			<LoadingOverlay active={this.state.loading} spinner text='Loading your tasks...'>
 				<div>
+					<SpinnerComponent loading={this.state.loading} position="global" color="#ff9800" message='Loading your tasks...'/>
 					<main className="popup-container">
 						<div className="popup-menu">
 							<FontAwesomeIcon onClick={()=>this.syncTask()} icon={faSync} />
@@ -63,7 +63,6 @@ class App extends Component {
 						</div>
 					</main>
 				</div>
-			</LoadingOverlay>
 		);
 	};
 }
