@@ -172,6 +172,7 @@ function follow_repo(){
 			OPEN_ISSUES: false,
 			OWN_PR_STATUS: false,
 			AGED_PRS: false,
+			AGEING_TREND: false,
 		})
   });
 }
