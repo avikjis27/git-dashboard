@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import GroupedPR from './GroupedPR';
 import Popup from "reactjs-popup";
 import './Queries.css';
+import ClosingTrends from './ClosingTrends';
 
 class Queries extends Component {
 
@@ -93,6 +94,24 @@ class Queries extends Component {
 		}
 	}
 
+	renderPRClosingTrend(closingPRTrends) {
+		if (this.state.reports["AGEING_TREND"] && Object.keys(this.state.reports["AGEING_TREND"]).length > 0) {
+			return (
+				<div>
+					<Popup trigger={ <a href="#">Details</a> } position="right center" modal closeOnDocumentClick>
+						<div className="details-scroll-pane"><ClosingTrends data={closingPRTrends} /></div>
+  				</Popup>
+				</div>
+			)
+		} else {
+			return (
+				<div>
+					-
+				</div>
+			)
+		}
+	}
+
 	render() {
 		return (
 			<table>
@@ -118,6 +137,10 @@ class Queries extends Component {
 					<tr>
 						<td>Age of open PR(s)</td>
 						<td>{this.renderAgedOpenPRs(this.state.reports["AGED_PRS"])}</td>
+					</tr>
+					<tr>
+						<td>PR Closing Trends</td>
+						<td>{this.renderPRClosingTrend(this.state.reports["AGEING_TREND"])}</td>
 					</tr>
 					<tr>
 						<td>Your Contribution</td>
